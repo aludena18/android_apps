@@ -1,0 +1,58 @@
+package com.abel.phonelocation;
+
+import android.app.Activity;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+	TextView tvPosicion;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		tvPosicion = (TextView)findViewById(R.id.txvPosicion);
+		MiLocationListener lListener = new MiLocationListener();
+		LocationManager lm = (LocationManager)getSystemService(LOCATION_SERVICE);
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, lListener);
+	}
+	
+	public class MiLocationListener implements LocationListener{
+
+		@Override
+		public void onLocationChanged(Location loc) {
+			// TODO Auto-generated method stub
+			String latitud = Double.toString(loc.getLatitude());
+			String longitud = Double.toString(loc.getLongitude());
+			String altitud = Double.toString(loc.getAltitude());
+			
+			tvPosicion.setText("La posicion actual es: \n" +
+					"Latitud = " + latitud + "\n" +
+					"Longitud = " + longitud + "\n" +
+					"Altitud = " + altitud);
+		}
+
+		@Override
+		public void onProviderDisabled(String arg0) {
+			tvPosicion.setText("GPS Desactivado");
+		}
+
+		@Override
+		public void onProviderEnabled(String arg0) {
+			tvPosicion.setText("GPS Activado");
+		}
+
+		@Override
+		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
+	
+}
