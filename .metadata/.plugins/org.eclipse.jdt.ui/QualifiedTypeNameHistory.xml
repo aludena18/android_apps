@@ -5,4 +5,6 @@
 <fullyQualifiedTypeName name="android.location.LocationManager"/>
 <fullyQualifiedTypeName name="com.abel.phonelocation.MainActivity.MiLocationListener"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
+<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
 </qualifiedTypeNameHistroy>
