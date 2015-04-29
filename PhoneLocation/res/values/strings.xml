@@ -5,5 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="etqPosicion">Posicion</string>
+    <string name="etqBtnOn">GPS On</string>
+    <string name="etqBtnOff">GPS Off</string>
+    <string name="etqTxvTimer">Timer</string>
 
 </resources>
