@@ -47,16 +47,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void run() {
 						Log.d("abel -- timer", ""+contador);
-						
-						runOnUiThread(new Runnable() {
-							
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								tvTimer.setText(""+contador);
-							}
-						});
-						
+						tvTimer.setText(contador);
 						contador++;
 					}
 				};
