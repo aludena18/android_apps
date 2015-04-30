@@ -1,5 +1,6 @@
 package com.abel.phonelocation;
 
+import java.net.InetAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +21,14 @@ public class MainActivity extends Activity {
 	Button btOn, btOff;
 	MiLocationListener lListener;
 	LocationManager lm;
+	
+	String imei, longitud, latitud, vel, time;
+	
+	InetAddress ipNumero;
+	
+	/*VARIABLES DONDE SE ALMACENARAN LOS MENSAJES DE ENTRADA Y SALIDA*/
+	byte[] enviaData = new byte[1024];
+	byte[] reciveData = new byte[1024];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +49,27 @@ public class MainActivity extends Activity {
 				btOff.setText("GPS Off");
 				lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, lListener);
 				
+				
+				
+				
+				
 				//iniciar timer
 				Timer timer = new Timer();
 				TimerTask task = new TimerTask() {
 					int contador = 0;
 					@Override
 					public void run() {
-						Log.d("abel -- timer", ""+contador);
 						
+						/*PARA MOSTRAR EL CONTADOR EN LA GUI*/
 						runOnUiThread(new Runnable() {
-							
 							@Override
 							public void run() {
 								// TODO Auto-generated method stub
+								Log.d("abel--timer", ""+contador);
 								tvTimer.setText(""+contador);
+								
+								String msj = imei + "," + time + "," + latitud + "," + longitud + "\n";
+								Log.d("abel--msj", msj);
 							}
 						});
 						
@@ -63,6 +79,7 @@ public class MainActivity extends Activity {
 				timer.schedule(task, 10, 1000);
 			}
 		});
+		
 		
 		btOff.setOnClickListener(new OnClickListener() {
 			
@@ -77,7 +94,7 @@ public class MainActivity extends Activity {
 
 		/*CODIGO PARA OBTENER EL IMEI DEL CELU*/
 		TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-		String imei = tm.getDeviceId();
+		imei = tm.getDeviceId();
 		tvHello.setText(imei);
 		
 		/*CODIGO PARA ACTIVAR EL GPS Y OBTENER LOS DATOS*/
@@ -93,11 +110,11 @@ public class MainActivity extends Activity {
 		@Override
 		public void onLocationChanged(Location loc) {
 			// TODO Auto-generated method stub
-			String latitud = Double.toString(loc.getLatitude());
-			String longitud = Double.toString(loc.getLongitude());
+			latitud = Double.toString(loc.getLatitude());
+			longitud = Double.toString(loc.getLongitude());
 			String altitud = Double.toString(loc.getAltitude());
-			String time = Long.toString(loc.getTime());
-			String vel = Float.toString(loc.getSpeed()*18/5);		// "*18/5" para pasar de m/s a km/h
+			time = Long.toString(loc.getTime());
+			vel = Float.toString(loc.getSpeed()*18/5);		// "*18/5" para pasar de m/s a km/h
 			String direccion = Float.toString(loc.getBearing());
 			
 			tvPosicion.setText("La posicion actual es: \n" +
