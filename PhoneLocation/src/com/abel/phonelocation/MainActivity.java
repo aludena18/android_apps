@@ -1,6 +1,11 @@
 package com.abel.phonelocation;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,6 +27,7 @@ public class MainActivity extends Activity {
 	MiLocationListener lListener;
 	LocationManager lm;
 	
+	String msj = "inicio";
 	String imei, longitud, latitud, vel, time;
 	
 	InetAddress ipNumero;
@@ -49,36 +55,62 @@ public class MainActivity extends Activity {
 				btOff.setText("GPS Off");
 				lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, lListener);
 				
-				
-				
-				
-				
-				//iniciar timer
-				Timer timer = new Timer();
-				TimerTask task = new TimerTask() {
-					int contador = 0;
-					@Override
+				/*SE CREA EL HILO PARA ENVIAR DATOS*/
+				new Thread(new Runnable() {
 					public void run() {
-						
-						/*PARA MOSTRAR EL CONTADOR EN LA GUI*/
-						runOnUiThread(new Runnable() {
+						/*-------*/
+						Timer timer = new Timer();
+						TimerTask task = new TimerTask() {
+							int contador = 0;
 							@Override
 							public void run() {
-								// TODO Auto-generated method stub
-								Log.d("abel--timer", ""+contador);
-								tvTimer.setText(""+contador);
 								
-								String msj = imei + "," + time + "," + latitud + "," + longitud + "\n";
-								Log.d("abel--msj", msj);
+								/*PARA MOSTRAR EL CONTADOR EN LA GUI*/
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										Log.d("abel--timer", ""+contador);
+										tvTimer.setText(""+contador);
+									}
+								});
+								/*--------------------------------------*/
+								try {
+									msj = imei + "," + time + "," + latitud + "," + longitud + "," + vel;
+									Log.d("abel", msj);
+									ipNumero = InetAddress.getByName("aludena.no-ip.biz");
+									DatagramSocket clienteSocket = new DatagramSocket();
+									enviaData = msj.getBytes();
+									DatagramPacket enviaPaquete = new DatagramPacket(enviaData, enviaData.length, ipNumero, 21020);
+									clienteSocket.send(enviaPaquete);
+									clienteSocket.close();
+								} catch (UnknownHostException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SocketException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								contador++;
 							}
-						});
+						};
+						timer.schedule(task, 10, 10000);
+						/*-------*/
 						
-						contador++;
 					}
-				};
-				timer.schedule(task, 10, 1000);
+				}).start();
+				
+				
+				/*INICIO DEL TIMER*/
+				
+				/*-------------------------------------*/
 			}
 		});
+		
+		
 		
 		
 		btOff.setOnClickListener(new OnClickListener() {

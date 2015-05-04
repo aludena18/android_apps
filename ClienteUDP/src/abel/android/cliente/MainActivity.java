@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							ipNumero = InetAddress.getByName("107.172.12.220");
+							ipNumero = InetAddress.getByName("aludena.no-ip.biz");
 							
 							/*VARIABLES DONDE SE ALMACENARAN LOS MENSAJES DE ENTRADA Y SALIDA*/
 							byte[] enviaData = new byte[1024];
