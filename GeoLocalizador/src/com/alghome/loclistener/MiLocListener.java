@@ -1,16 +1,25 @@
 package com.alghome.loclistener;
 
-import com.alghome.datagetset.GpsGetset;
-
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
-public class MiLocListener implements LocationListener{
-	
+import com.alghome.datagetset.GpsGetset;
+
+public class MiLocListener extends Thread implements LocationListener{
+	String msj;
 	GpsGetset gpsData;
+	Handler uiHandler;
+	Handler dataHandler;
+	
+	public MiLocListener(Handler hd){
+		uiHandler = hd;
+	}
+	
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
@@ -22,8 +31,25 @@ public class MiLocListener implements LocationListener{
 		gpsData.setAltitud(Double.toString(location.getAltitude()));
 		gpsData.setGiro(Float.toString(location.getBearing()));
 		
-		String msj = gpsData.getFechayhora() + "," + gpsData.getLatitud() + "," + gpsData.getLongitud();
+		msj = gpsData.getFechayhora() + "," + gpsData.getLatitud() + "," + gpsData.getLongitud();
+		gpsData.setMensaje(msj);
 		Log.d("abel--loclistener", msj);
+		this.run();
+	}
+
+	@Override
+	public void run() {
+		Bundle b = new Bundle();
+		b.putString("key", "loclistener : " + msj);
+		
+		Message msg = uiHandler.obtainMessage();
+		msg.setData(b);
+		uiHandler.sendMessage(msg);
+	}
+	
+	
+	public Handler getHandlerToMsgQueue(){
+		return dataHandler;
 	}
 
 	@Override

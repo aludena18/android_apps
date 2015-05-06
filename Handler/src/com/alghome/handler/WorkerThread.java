@@ -28,7 +28,6 @@ public class WorkerThread extends Thread {
     uiHandler = h;
   }
 
-  // what needs to be executed when thread starts
   @Override
   public void run() {
     // Thread by default doesnt have a msg queue, to attach a msg queue to this thread

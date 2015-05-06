@@ -1,0 +1,52 @@
+package com.alghome.loclistener;
+
+import android.content.Context;
+import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+
+import com.alghome.datagetset.GpsGetset;
+
+public class MiLocManager extends AsyncTask<Void, Void, Void>{
+	MiLocListener mLocListener;
+	LocationManager mLocManager;
+	Context contexto;
+	GpsGetset dataGps;
+	private Handler miHandler;
+	
+	public MiLocManager(Context ctx){
+		contexto = ctx;
+	}
+
+	@Override
+	protected Void doInBackground(Void... params) {
+		mLocListener = new MiLocListener(null);
+		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		
+		miHandler = new Handler(){
+			public void handleMessage(Message msg) {
+				Bundle b = msg.getData();
+				Log.d("abel--handler", ""+b.getString("key"));
+			}
+		};
+		
+		
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		dataGps = new GpsGetset();
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+		
+		Thread miListenerThread = new MiLocListener(miHandler);
+		miListenerThread.start();
+		
+		//Toast.makeText(contexto, dataGps.getMensaje(), Toast.LENGTH_SHORT).show();
+	}
+	
+
+}
