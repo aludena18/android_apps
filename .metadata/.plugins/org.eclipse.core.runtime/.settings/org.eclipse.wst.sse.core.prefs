@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-task-tag-projects-already-scanned=MyGps,RemoteSystemsTempFiles,PhoneLocation,ClienteUDP,Java Sockets UDP_TCP
+task-tag-projects-already-scanned=RemoteSystemsTempFiles,ClienteUDP,GeoLocalizador,Java Sockets UDP_TCP,MyGps,PhoneLocation

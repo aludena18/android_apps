@@ -1,0 +1,40 @@
+package com.alghome.loclistener;
+
+import com.alghome.datagetset.GpsGetset;
+
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
+
+public class MiLocListener implements LocationListener{
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		GpsGetset gpsData = new GpsGetset();
+		gpsData.setFechayhora(Long.toString(location.getTime()));
+		gpsData.setLatitud(Double.toString(location.getLatitude()));
+		gpsData.setLongitud(Double.toString(location.getLongitude()));
+		gpsData.setVelocidad(Float.toString(location.getSpeed()));
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

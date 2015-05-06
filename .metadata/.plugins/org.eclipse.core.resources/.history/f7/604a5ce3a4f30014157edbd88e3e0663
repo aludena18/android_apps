@@ -1,0 +1,14 @@
+package com.alghome.datagetset;
+
+import java.io.Serializable;
+
+public class GpsGetset implements Serializable{
+	String mensaje;
+	String imei;
+	String fechayhora;
+	String latitud;
+	String longitud;
+	String velocidad;
+	String giro;
+	
+}
