@@ -1,5 +1,11 @@
 package com.alghome.loclistener;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,6 +13,7 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.alghome.datagetset.GpsGetset;
@@ -14,11 +21,16 @@ import com.alghome.datagetset.GpsGetset;
 public class MiLocManager extends AsyncTask<Void, Void, Void>{
 	MiLocListener mLocListener;
 	LocationManager mLocManager;
+	TelephonyManager mTManager;
 	Context contexto;
 	GpsGetset dataGps;
 	
 	Handler workerHandler;
 	Handler uiHandler;
+	
+	InetAddress ipNumber;
+	byte[] enviaData = new byte[1024];
+	byte[] reciveData = new byte[1024];
 	
 	public MiLocManager(Context ctx){
 		contexto = ctx;
@@ -28,18 +40,46 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		mLocListener = new MiLocListener();
 		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		mTManager = (TelephonyManager)contexto.getSystemService(Context.TELEPHONY_SERVICE);
+		mLocListener = new MiLocListener(mTManager.getDeviceId());
 		
-		dataGps = mLocListener.gpsData;
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
+		new Thread(new Runnable() {
+			
 			@Override
 			public void run() {
-				Log.d("abel--MiLocManager", ""+dataGps.getMensaje());
+				// TODO Auto-generated method stub
+				dataGps = mLocListener.datosGPS();
+				Timer timer = new Timer();
+				TimerTask task = new TimerTask() {
+					@Override
+					public void run() {
+						Log.d("abel--MiLocManager", ""+dataGps.getMensaje());
+						try {
+							String msj = ""+dataGps.getMensaje();
+							ipNumber = InetAddress.getByName("107.172.12.220");
+							DatagramSocket clSocket = new DatagramSocket();
+							enviaData = msj.getBytes();
+							DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
+							clSocket.send(dgPacket);
+							clSocket.close();
+						} catch (UnknownHostException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (SocketException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
+				timer.scheduleAtFixedRate(task, 10, 1000);
 			}
-		};
-		timer.scheduleAtFixedRate(task, 10, 1000);
+		}).start();
+		
+		
 		
 		return null;
 	}

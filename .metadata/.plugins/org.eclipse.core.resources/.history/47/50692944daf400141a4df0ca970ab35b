@@ -1,0 +1,16 @@
+package com.alghome.builder;
+
+import com.alghome.datagetset.GpsGetset;
+
+public class FrameBuilder {
+	String imei;
+	GpsGetset dataGetSet;
+	
+	public FrameBuilder(GpsGetset ggs, String i){
+		dataGetSet = ggs;
+		imei = i;
+	}
+	
+	
+
+}

@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
-<fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="android.location.LocationManager"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocManager"/>
 <fullyQualifiedTypeName name="android.text.InputFilter.LengthFilter"/>
@@ -12,13 +11,19 @@
 <fullyQualifiedTypeName name="com.alghome.loclistener.DataListenerThread"/>
 <fullyQualifiedTypeName name="android.os.Looper"/>
 <fullyQualifiedTypeName name="android.os.Message"/>
-<fullyQualifiedTypeName name="java.lang.Runnable"/>
-<fullyQualifiedTypeName name="java.lang.Thread"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
 <fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GpsGetset"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
+<fullyQualifiedTypeName name="com.alghome.builder.FrameBuilder"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="java.lang.Runnable"/>
+<fullyQualifiedTypeName name="java.net.InetAddress"/>
+<fullyQualifiedTypeName name="java.net.DatagramPacket"/>
+<fullyQualifiedTypeName name="java.net.DatagramSocket"/>
 </qualifiedTypeNameHistroy>
