@@ -1,0 +1,56 @@
+package com.alghome.loclistener;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.content.Context;
+import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.util.Log;
+
+import com.alghome.datagetset.GpsGetset;
+
+public class MiLocManager extends AsyncTask<Void, Void, Void>{
+	MiLocListener mLocListener;
+	LocationManager mLocManager;
+	Context contexto;
+	GpsGetset dataGps;
+	
+	Handler workerHandler;
+	Handler uiHandler;
+	
+	public MiLocManager(Context ctx){
+		contexto = ctx;
+	}
+	
+	
+
+	@Override
+	protected Void doInBackground(Void... params) {
+		mLocListener = new MiLocListener();
+		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		
+		dataGps = new GpsGetset();
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				Log.d("abel--MiLocManager", ""+dataGps.getMensaje());
+			}
+		};
+		timer.scheduleAtFixedRate(task, 10, 1000);
+		
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+		
+		
+	
+	}
+	
+
+}

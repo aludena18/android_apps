@@ -6,9 +6,7 @@ import java.util.TimerTask;
 import android.content.Context;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.alghome.datagetset.GpsGetset;
@@ -19,50 +17,38 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 	Context contexto;
 	GpsGetset dataGps;
 	
-	private Handler uiHandler;
-	Thread miListenerThread;
+	Handler workerHandler;
+	Handler uiHandler;
 	
 	public MiLocManager(Context ctx){
 		contexto = ctx;
 	}
+	
+	
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		mLocListener = new MiLocListener(null);
+		mLocListener = new MiLocListener();
 		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		
+		dataGps = mLocListener.gpsData;
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				Log.d("abel--MiLocManager", ""+dataGps.getMensaje());
+			}
+		};
+		timer.scheduleAtFixedRate(task, 10, 1000);
+		
 		return null;
 	}
 
 	@Override
 	protected void onPostExecute(Void result) {
-		dataGps = new GpsGetset();
 		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
 		
 		
-		/*----------HANDLER-------------------------------------*/
-		uiHandler = new Handler(){
-			public void handleMessage(Message msg) {
-				Bundle b = msg.getData();
-				Log.d("abel--handler", b.getString("key"));
-			}
-		};
-		miListenerThread = new MiLocListener(uiHandler);
-		miListenerThread.start();
-		/*------------------------------------------------------*/
-		
-		
-		
-		/*--------EVENTO TIMER-----------------*/
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
-			
-			@Override
-			public void run() {
-				
-			}
-		};
-		timer.schedule(task, 10, 1000);
-		/*---------------------------------------*/
 	
 	}
 	

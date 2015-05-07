@@ -1,0 +1,40 @@
+package com.alghome.loclistener;
+
+import android.content.Context;
+import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Handler;
+
+import com.alghome.datagetset.GpsGetset;
+
+public class MiLocManager extends AsyncTask<Void, Void, Void>{
+	MiLocListener mLocListener;
+	LocationManager mLocManager;
+	Context contexto;
+	GpsGetset dataGps;
+	
+	Handler workerHandler;
+	Handler uiHandler;
+	
+	public MiLocManager(Context ctx){
+		contexto = ctx;
+	}
+	
+	
+
+	@Override
+	protected Void doInBackground(Void... params) {
+		mLocListener = new MiLocListener();
+		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+		
+	
+	}
+	
+
+}
