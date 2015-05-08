@@ -57,12 +57,14 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 						Log.d("abel--MiLocManager", ""+dataGps.getMensaje());
 						try {
 							String msj = ""+dataGps.getMensaje();
-							ipNumber = InetAddress.getByName("107.172.12.220");
-							DatagramSocket clSocket = new DatagramSocket();
-							enviaData = msj.getBytes();
-							DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
-							clSocket.send(dgPacket);
-							clSocket.close();
+							if(msj.trim().startsWith("$$")){
+								ipNumber = InetAddress.getByName("aludena.no-ip.biz");
+								DatagramSocket clSocket = new DatagramSocket();
+								enviaData = msj.getBytes();
+								DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
+								clSocket.send(dgPacket);
+								clSocket.close();
+							}
 						} catch (UnknownHostException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -75,7 +77,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 						}
 					}
 				};
-				timer.scheduleAtFixedRate(task, 10, 1000);
+				timer.scheduleAtFixedRate(task, 10, 10000);
 			}
 		}).start();
 		
@@ -87,10 +89,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 	@Override
 	protected void onPostExecute(Void result) {
 		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
-		
-		
 	
 	}
 	
-
 }

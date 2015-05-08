@@ -44,15 +44,15 @@ public class MiLocListener implements LocationListener{
 	@Override
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
-		gpsData.setMensaje("GPS Activado");
-		Log.d("abel--loclistener", gpsData.getMensaje());
+		String msje = "GPS Activado";
+		Log.d("abel--loclistener", msje);
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
-		gpsData.setMensaje("GPS Desactivado");
-		Log.d("abel--loclistener", gpsData.getMensaje());
+		String msje = "GPS Desactivado";
+		Log.d("abel--loclistener", msje);
 	}
 	
 	public GpsGetset datosGPS() {
