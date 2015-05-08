@@ -58,7 +58,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 						try {
 							String msj = ""+dataGps.getMensaje();
 							if(msj.trim().startsWith("$$")){
-								ipNumber = InetAddress.getByName("aludena.no-ip.biz");
+								ipNumber = InetAddress.getByName("107.172.12.220");
 								DatagramSocket clSocket = new DatagramSocket();
 								enviaData = msj.getBytes();
 								DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
@@ -77,7 +77,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 						}
 					}
 				};
-				timer.scheduleAtFixedRate(task, 10, 10000);
+				timer.scheduleAtFixedRate(task, 10, 120000);
 			}
 		}).start();
 		

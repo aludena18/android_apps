@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 								contador++;
 							}
 						};
-						timer.schedule(task, 10, 10000);
+						//timer.schedule(task, 10, 10000);
 						/*-------*/
 						
 					}

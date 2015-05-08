@@ -23,7 +23,7 @@ public class MiLocListener implements LocationListener{
 		gpsData.setFechayhora(Long.toString(location.getTime()));
 		gpsData.setLatitud(Double.toString(location.getLatitude()));
 		gpsData.setLongitud(Double.toString(location.getLongitude()));
-		gpsData.setVelocidad(Float.toString(location.getSpeed()));
+		gpsData.setVelocidad(Float.toString(location.getSpeed()*18/5));
 		gpsData.setAltitud(Double.toString(location.getAltitude()));
 		gpsData.setGiro(Float.toString(location.getBearing()));
 		
@@ -51,6 +51,7 @@ public class MiLocListener implements LocationListener{
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
+		gpsData.setMensaje("null");
 		String msje = "GPS Desactivado";
 		Log.d("abel--loclistener", msje);
 	}
