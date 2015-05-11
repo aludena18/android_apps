@@ -1,0 +1,86 @@
+package com.alg.geolocalizadorgsm;
+
+import android.app.Activity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+	TextView tvPosicion;
+	String lat,lon,alt,vel,time,dir;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		tvPosicion = (TextView)findViewById(R.id.txvMensaje);
+		
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	/*LOCATION LISTENER*/
+	public class MiLocationListener implements LocationListener{
+
+		@Override
+		public void onLocationChanged(Location loc) {
+			// TODO Auto-generated method stub
+			lat = Double.toString(loc.getLatitude());
+			lon = Double.toString(loc.getLongitude());
+			String alt = Double.toString(loc.getAltitude());
+			time = Long.toString(loc.getTime());
+			vel = Float.toString(loc.getSpeed()*18/5);		// "*18/5" para pasar de m/s a km/h
+			String dir = Float.toString(loc.getBearing());
+			
+			tvPosicion.setText("La posicion actual es: \n" +
+					"Latitud = " + lat + "\n" +
+					"Longitud = " + lon + "\n" +
+					"Altitud = " + alt + "\n" +
+					"Fecha y Hora = " + time + "\n" +
+					"Velocidad = " + vel + "\n" +
+					"Direccion = + " + dir);
+		}
+
+		@Override
+		public void onProviderDisabled(String arg0) {
+			tvPosicion.setText("GPS Desactivado");
+		}
+
+		@Override
+		public void onProviderEnabled(String arg0) {
+			tvPosicion.setText("GPS Activado");
+		}
+
+		@Override
+		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+}
