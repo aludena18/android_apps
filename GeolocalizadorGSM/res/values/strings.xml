@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     
     <string name="etqTxvMensaje">Inicio</string>
+    <string name="etqTxvDatosFono">Datos del Telefono</string>
 
 </resources>

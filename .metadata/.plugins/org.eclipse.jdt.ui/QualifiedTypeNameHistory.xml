@@ -16,7 +16,6 @@
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GpsGetset"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
@@ -27,4 +26,12 @@
 <fullyQualifiedTypeName name="java.net.DatagramPacket"/>
 <fullyQualifiedTypeName name="java.net.DatagramSocket"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
+<fullyQualifiedTypeName name="android.telephony.CellLocation"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
+<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.library.db.OpenCellIdLibContext"/>
+<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.download.OpenCellIDDownloadService"/>
+<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.library.db.CellsTable"/>
+<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.library.db.CellsDatabase"/>
 </qualifiedTypeNameHistroy>
