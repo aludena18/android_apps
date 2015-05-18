@@ -51,11 +51,6 @@ public class MainActivity extends Activity {
 		
 		
 		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		
-		
-		/*OPEN CELL ID*/
-		
-		//--------------------------
 
 		// Define a listener that responds to location updates
 		LocationListener locationListener = new LocationListener() {

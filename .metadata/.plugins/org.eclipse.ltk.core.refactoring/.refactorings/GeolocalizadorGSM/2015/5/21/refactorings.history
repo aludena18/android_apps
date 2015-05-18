@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;GeolocalizadorGSM&apos;&#x0D;&#x0A;- Original project: &apos;GeolocalizadorGSM&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     opencellid_library_v2.0.jar&#x0D;&#x0A;     opencellidaccesslibrary.jar&#x0D;&#x0A;     opencellidcollectservice.jar&#x0D;&#x0A;     opencelliduploadservice.jar" description="Delete elements" element1="libs/opencellid_library_v2.0.jar" element2="libs/opencellidaccesslibrary.jar" element3="libs/opencelliduploadservice.jar" element4="libs/opencellidcollectservice.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="4" stamp="1431989825976" subPackages="false" version="1.0"/>
+</session>

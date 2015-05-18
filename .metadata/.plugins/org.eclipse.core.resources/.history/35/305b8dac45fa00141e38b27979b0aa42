@@ -125,10 +125,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
-				/*CODIGO PARA APAGAR EL GPS*/
-				//----------------------------
-				
 				btOff.setText("Apagado");
 				btOn.setText("GPS On");
 				lm.removeUpdates(lListener);

@@ -31,7 +31,10 @@
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
 <fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.library.db.OpenCellIdLibContext"/>
-<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.download.OpenCellIDDownloadService"/>
 <fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.library.db.CellsTable"/>
 <fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.library.db.CellsDatabase"/>
+<fullyQualifiedTypeName name="android.provider.Settings"/>
+<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.collect.OpenCellIDCollectService"/>
+<fullyQualifiedTypeName name="android.webkit.GeolocationPermissions"/>
+<fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.download.OpenCellIDDownloadService"/>
 </qualifiedTypeNameHistroy>

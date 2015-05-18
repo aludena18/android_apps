@@ -127,6 +127,9 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				
 				/*CODIGO PARA APAGAR EL GPS*/
+				Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+				intent.putExtra("enabled", false);
+				sendBroadcast(intent);
 				//----------------------------
 				
 				btOff.setText("Apagado");

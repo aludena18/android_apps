@@ -14,7 +14,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -127,6 +129,13 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				
 				/*CODIGO PARA APAGAR EL GPS*/
+				String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+			        final Intent poke = new Intent();
+			        poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+			        poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+			        poke.setData(Uri.parse("3")); 
+			        sendBroadcast(poke);
 				//----------------------------
 				
 				btOff.setText("Apagado");
