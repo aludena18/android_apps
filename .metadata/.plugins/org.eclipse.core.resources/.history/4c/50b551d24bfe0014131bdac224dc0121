@@ -35,8 +35,6 @@ public class MainActivity extends Activity implements OnClickListener{
 		tvDatosPhone = (TextView)findViewById(R.id.txvDatosFono);
 		btLocation = (Button)findViewById(R.id.btnLocation);
 		
-		btLocation.setOnClickListener(this);
-		
 		tlfManager = (TelephonyManager)this.getSystemService(TELEPHONY_SERVICE);
 		
 		String operatorName = tlfManager.getNetworkOperatorName();
@@ -104,27 +102,17 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
 		switch(v.getId()){
 		case R.id.btnLocation:
-			Log.d("ALG -- MAINACTIVITY", "Boton presionado");
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					urlMensaje();
-				}
-			}).start();
-			break;
-			
-		default:
-			break;
+			String urlMsj = urlMensaje();
+			Log.d("ALG -- MAINACTIVITY", urlMsj);
 		}
 	}
 
 
 
 
-	private void urlMensaje() {
+	private String urlMensaje() {
 		// TODO Auto-generated method stub
 		URL urlConsulta = null;
 		InputStreamReader isrConsulta = null;
@@ -152,7 +140,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Log.d("URL -- MAIN ACTIVITY", strBuffer.toString());
+		return strBuffer.toString();
 	}
 	
 	

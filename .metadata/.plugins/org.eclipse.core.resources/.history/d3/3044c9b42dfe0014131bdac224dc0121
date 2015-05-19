@@ -8,6 +8,5 @@
     <string name="etqTxvMensaje">Inicio</string>
     <string name="etqTxvDatosFono">Datos del Telefono</string>
     <string name="etqBtnLocation">Open Cell ID</string>
-    <string name="etqTxvDatosOCID">...</string>
 
 </resources>

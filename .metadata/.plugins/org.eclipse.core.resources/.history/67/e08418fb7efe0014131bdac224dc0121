@@ -109,9 +109,12 @@ public class MainActivity extends Activity implements OnClickListener{
 		case R.id.btnLocation:
 			Log.d("ALG -- MAINACTIVITY", "Boton presionado");
 			new Thread(new Runnable() {
+				
 				@Override
 				public void run() {
+					// TODO Auto-generated method stub
 					urlMensaje();
+					
 				}
 			}).start();
 			break;

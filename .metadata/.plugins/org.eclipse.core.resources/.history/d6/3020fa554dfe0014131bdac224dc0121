@@ -108,12 +108,8 @@ public class MainActivity extends Activity implements OnClickListener{
 		switch(v.getId()){
 		case R.id.btnLocation:
 			Log.d("ALG -- MAINACTIVITY", "Boton presionado");
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					urlMensaje();
-				}
-			}).start();
+			String urlMsj = urlMensaje();
+			Log.d("ALG -- MAINACTIVITY", urlMsj);
 			break;
 			
 		default:
@@ -124,7 +120,7 @@ public class MainActivity extends Activity implements OnClickListener{
 
 
 
-	private void urlMensaje() {
+	private String urlMensaje() {
 		// TODO Auto-generated method stub
 		URL urlConsulta = null;
 		InputStreamReader isrConsulta = null;
@@ -152,7 +148,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Log.d("URL -- MAIN ACTIVITY", strBuffer.toString());
+		return strBuffer.toString();
 	}
 	
 	
