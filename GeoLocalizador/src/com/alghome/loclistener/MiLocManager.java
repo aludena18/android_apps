@@ -24,28 +24,39 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 	TelephonyManager mTManager;
 	Context contexto;
 	GpsGetset dataGps;
-	
+
 	Handler workerHandler;
 	Handler uiHandler;
-	
+
 	InetAddress ipNumber;
 	byte[] enviaData = new byte[1024];
 	byte[] reciveData = new byte[1024];
-	
+
 	public MiLocManager(Context ctx){
 		contexto = ctx;
 	}
-	
-	
+
+
 
 	@Override
 	protected Void doInBackground(Void... params) {
 		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
 		mTManager = (TelephonyManager)contexto.getSystemService(Context.TELEPHONY_SERVICE);
 		mLocListener = new MiLocListener(mTManager.getDeviceId());
-		
+		envioDatos();
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+	}
+
+	
+	
+	public void envioDatos(){
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -65,31 +76,16 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 								clSocket.send(dgPacket);
 								clSocket.close();
 							}
-						} catch (UnknownHostException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (SocketException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						}  
 					}
 				};
 				timer.scheduleAtFixedRate(task, 10, 120000);
 			}
 		}).start();
-		
-		
-		
-		return null;
+
 	}
 
-	@Override
-	protected void onPostExecute(Void result) {
-		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
-	
-	}
-	
 }
