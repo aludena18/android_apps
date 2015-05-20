@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,17 +12,23 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
 import com.alghome.datagetset.GpsGetset;
+import com.alghome.datagetset.GsmGetSet;
 
 public class MiLocManager extends AsyncTask<Void, Void, Void>{
+	MiLocListenerGsm mLocListenerGsm;
 	MiLocListener mLocListener;
 	LocationManager mLocManager;
 	TelephonyManager mTManager;
+	GsmCellLocation gsmCellLoc;
 	Context contexto;
-	GpsGetset dataGps;
-
+	
+	GpsGetset datosGetSet;
+	GsmGetSet datosGsmGetSet;
+	
 	Handler workerHandler;
 	Handler uiHandler;
 
@@ -34,6 +38,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 
 	public MiLocManager(Context ctx){
 		contexto = ctx;
+		
 	}
 
 
@@ -42,7 +47,14 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 	protected Void doInBackground(Void... params) {
 		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
 		mTManager = (TelephonyManager)contexto.getSystemService(Context.TELEPHONY_SERVICE);
+		gsmCellLoc = (GsmCellLocation)mTManager.getCellLocation();
+		
 		mLocListener = new MiLocListener(mTManager.getDeviceId());
+		mLocListenerGsm = new MiLocListenerGsm( mTManager, gsmCellLoc);
+		
+		datosGetSet = mLocListener.getDataGPS();
+		datosGsmGetSet = mLocListenerGsm.getDataGSM();
+		
 		envioDatos();
 		return null;
 	}
@@ -60,29 +72,33 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				dataGps = mLocListener.datosGPS();
 				Timer timer = new Timer();
 				TimerTask task = new TimerTask() {
 					@Override
 					public void run() {
-						Log.d("abel--MiLocManager", ""+dataGps.getMensaje());
+						String tramaGPS = "" + datosGetSet.getTramaGps();
+						String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
+						
+						Log.d("abel--MiLocManager--GPS", tramaGPS);
+						Log.d("abel- miLocManager--GSM", tramaGSM);
+						
+						if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
+						else if(tramaGPS.trim().startsWith("$$V")) enviaData = tramaGSM.getBytes();
+						/*
 						try {
-							String msj = ""+dataGps.getMensaje();
-							if(msj.trim().startsWith("$$")){
-								ipNumber = InetAddress.getByName("107.172.12.220");
-								DatagramSocket clSocket = new DatagramSocket();
-								enviaData = msj.getBytes();
-								DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
-								clSocket.send(dgPacket);
-								clSocket.close();
-							}
+							ipNumber = InetAddress.getByName("107.172.12.220");
+							DatagramSocket clSocket = new DatagramSocket();
+							DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
+							clSocket.send(dgPacket);
+							clSocket.close();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}  
+						}
+						*/
 					}
 				};
-				timer.scheduleAtFixedRate(task, 10, 120000);
+				timer.scheduleAtFixedRate(task, 5000, 30000);
 			}
 		}).start();
 

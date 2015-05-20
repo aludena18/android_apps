@@ -1,0 +1,13 @@
+package com.alghome.loclistener;
+
+import com.alghome.datagetset.GsmGetSet;
+
+public class MiLocListenerGsm {
+	GsmGetSet gsmData;
+	
+	public MiLocListenerGsm(String i){
+		gsmData = new GsmGetSet();
+		
+	}
+
+}

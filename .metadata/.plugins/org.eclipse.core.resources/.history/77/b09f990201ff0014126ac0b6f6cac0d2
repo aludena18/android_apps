@@ -1,0 +1,86 @@
+package com.alghome.loclistener;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.content.Context;
+import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
+public class MiLocManager extends AsyncTask<Void, Void, Void>{
+	MiLocListener mLocListener;
+	LocationManager mLocManager;
+	TelephonyManager mTManager;
+	Context contexto;
+	String tramaGPS;
+
+	Handler workerHandler;
+	Handler uiHandler;
+
+	InetAddress ipNumber;
+	byte[] enviaData = new byte[1024];
+	byte[] reciveData = new byte[1024];
+
+	public MiLocManager(Context ctx){
+		contexto = ctx;
+	}
+
+
+
+	@Override
+	protected Void doInBackground(Void... params) {
+		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		mTManager = (TelephonyManager)contexto.getSystemService(Context.TELEPHONY_SERVICE);
+		mLocListener = new MiLocListener(mTManager.getDeviceId());
+		envioDatos();
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+	}
+
+	
+	
+	public void envioDatos(){
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				tramaGPS = mLocListener.frameGPS();
+				Timer timer = new Timer();
+				TimerTask task = new TimerTask() {
+					@Override
+					public void run() {
+						Log.d("abel--MiLocManager", "trama : " + tramaGPS.trim());
+						try {
+							if(tramaGPS.trim().startsWith("$$")){
+								ipNumber = InetAddress.getByName("107.172.12.220");
+								DatagramSocket clSocket = new DatagramSocket();
+								enviaData = tramaGPS.getBytes();
+								DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
+								clSocket.send(dgPacket);
+								clSocket.close();
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}  
+					}
+				};
+				timer.scheduleAtFixedRate(task, 10, 20000);
+			}
+		}).start();
+
+	}
+
+}

@@ -1,0 +1,31 @@
+package com.alghome.loclistener;
+
+import java.util.TimerTask;
+
+import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
+
+import com.alghome.datagetset.GsmGetSet;
+
+public class MiLocListenerGsm {
+	GsmGetSet gsmData;
+	String opName;
+	String mcc;
+	String mnc;
+	String lac;
+	String cellId;
+	
+	public MiLocListenerGsm(String i, TelephonyManager tm, GsmCellLocation gsmCell){
+		gsmData = new GsmGetSet();
+		gsmData.setImei(i);
+		
+		TimerTask timer = new TimerTask() {
+			public void run() {
+				mcc = tm.
+			}
+		};
+		
+	}
+	
+
+}

@@ -1,0 +1,44 @@
+package com.alghome.builder;
+
+import com.alghome.datagetset.GpsGetset;
+
+public class FrameBuilder {
+	GpsGetset dataGetSet;
+
+	private String imei;
+	private String latitude;
+	private String longitude;
+	private String datetime;
+	private String speed;
+	private String heading;
+	private String altitude;
+
+	private String frame;
+
+
+	public FrameBuilder(GpsGetset ggs){
+		dataGetSet = ggs;
+	}
+
+	frame = "$$," + gpsData.getImei() + "," +		//imei
+			" "	+ "," +						//command
+			" "	+ "," +						//event codde
+			gpsData.getLatitud() + "," +	//latitud
+			gpsData.getLongitud() + "," +	//longitud
+			gpsData.getFechayhora() + "," +	//date time
+			" "	+ "," +						//gps status
+			" "	+ "," +						//number satellites
+			" "	+ "," +						//gsm signal
+			gpsData.getVelocidad() + "," +	//speed
+			gpsData.getGiro() + ","	+		//heading
+			" "	+ "," +						//HDOP
+			gpsData.getAltitud() + "," +	//altitude
+			" "	+ "," +						//mileage
+			" "	+ "," +						//runtime
+			" "	+ "," +						//Base ID
+			" "	+ "," +						//Sate IO
+			"*";
+
+	gpsData.setMensaje(frame);
+
+}

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,11 +48,13 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		String simOperator = tlfManager.getSimOperator();
 		
-		
-		
 		GsmCellLocation gsmCelLoc = (GsmCellLocation)tlfManager.getCellLocation();
 		String lac = Integer.toString(gsmCelLoc.getLac());
 		String cid = Integer.toString(gsmCelLoc.getCid());
+		
+		long date = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm yyyyMMdd",Locale.US);
+		String dateString = sdf.format(date);
 		
 		tvDatosPhone.setText(	"OP NAME = " + operatorName + "\n" +
 								"OP CODE = " + operatorCode + "\n" +
@@ -58,7 +62,8 @@ public class MainActivity extends Activity implements OnClickListener{
 								"IMEI = " + imei + "\n" +
 								"CELL LOC = " + cellLoc + "\n" +
 								"CELL ID = " + cid + "\n" +
-								"LAC = " + lac + "\n"
+								"LAC = " + lac + "\n" +
+								"Fecha Hora = " + dateString + "\n"
 				);
 		
 		

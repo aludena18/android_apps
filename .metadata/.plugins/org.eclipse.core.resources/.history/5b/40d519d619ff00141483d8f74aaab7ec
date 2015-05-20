@@ -1,0 +1,11 @@
+package com.alghome.builder;
+
+import com.alghome.datagetset.GsmGetSet;
+
+public class FrameBuilderGsm {
+	
+	public FrameBuilderGsm(GsmGetSet gsmGS){
+		
+	}
+
+}

@@ -5,10 +5,10 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.alghome.builder.FrameBuilder;
 import com.alghome.datagetset.GpsGetset;
 
 public class MiLocListener implements LocationListener{
-	String msj;
 	GpsGetset gpsData;
 	
 	public MiLocListener(String i){
@@ -18,7 +18,6 @@ public class MiLocListener implements LocationListener{
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
 		
 		gpsData.setFechayhora(Long.toString(location.getTime()));
 		gpsData.setLatitud(Double.toString(location.getLatitude()));
@@ -27,12 +26,8 @@ public class MiLocListener implements LocationListener{
 		gpsData.setAltitud(Double.toString(location.getAltitude()));
 		gpsData.setGiro(Float.toString(location.getBearing()));
 		
-		//msj = gpsData.getFechayhora() + "," + gpsData.getLatitud() + "," + gpsData.getLongitud();
-		//gpsData.setMensaje(msj);
-		//Log.d("abel--loclistener", msj);
-		
-		FrameBuilder();
-		
+		FrameBuilder fb = new FrameBuilder(gpsData);
+		gpsData.setTramaGps(fb.tramaGPS());
 	}
 
 
@@ -43,47 +38,21 @@ public class MiLocListener implements LocationListener{
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
 		String msje = "GPS Activado";
 		Log.d("abel--loclistener", msje);
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		gpsData.setMensaje("null");
+		gpsData.setTramaGps("$$V");
 		String msje = "GPS Desactivado";
 		Log.d("abel--loclistener", msje);
 	}
 	
-	public GpsGetset datosGPS() {
+	
+	public GpsGetset getDataGPS() {
 		return gpsData;
 	}
 	
-	public void FrameBuilder(){
-		String frame;
-		
-		frame = "$$," + gpsData.getImei() + "," +		//imei
-						" "	+ "," +						//command
-						" "	+ "," +						//event codde
-						gpsData.getLatitud() + "," +	//latitud
-						gpsData.getLongitud() + "," +	//longitud
-						gpsData.getFechayhora() + "," +	//date time
-						" "	+ "," +						//gps status
-						" "	+ "," +						//number satellites
-						" "	+ "," +						//gsm signal
-						gpsData.getVelocidad() + "," +	//speed
-						gpsData.getGiro() + ","	+		//heading
-						" "	+ "," +						//HDOP
-						gpsData.getAltitud() + "," +	//altitude
-						" "	+ "," +						//mileage
-						" "	+ "," +						//runtime
-						" "	+ "," +						//Base ID
-						" "	+ "," +						//Sate IO
-						"*";
-			
-		gpsData.setMensaje(frame);
-		
-	}
-
+	
 }

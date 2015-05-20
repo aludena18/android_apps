@@ -1,0 +1,25 @@
+package com.alghome.loclistener;
+
+import android.animation.TimeAnimator;
+import android.animation.TimeAnimator.TimeListener;
+
+import com.alghome.datagetset.GsmGetSet;
+
+public class MiLocListenerGsm implements TimeListener{
+	GsmGetSet gsmData;
+	
+	public MiLocListenerGsm(String i){
+		gsmData = new GsmGetSet();
+		gsmData.setImei(i);
+		
+	}
+
+	@Override
+	public void onTimeUpdate(TimeAnimator animation, long totalTime,
+			long deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}

@@ -1,0 +1,23 @@
+package com.alghome.loclistener;
+
+import java.util.TimerTask;
+
+import com.alghome.datagetset.GsmGetSet;
+
+public class MiLocListenerGsm {
+	GsmGetSet gsmData;
+	
+	public MiLocListenerGsm(String i){
+		gsmData = new GsmGetSet();
+		gsmData.setImei(i);
+		
+		TimerTask timer = new TimerTask() {
+			public void run() {
+				
+			}
+		};
+		
+	}
+	
+
+}

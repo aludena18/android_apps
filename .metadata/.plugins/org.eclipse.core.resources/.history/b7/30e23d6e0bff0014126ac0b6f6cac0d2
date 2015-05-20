@@ -1,0 +1,14 @@
+package com.alghome.datagetset;
+
+import java.io.Serializable;
+
+public class GsmGetSet implements Serializable{
+	String mcc;
+	String mnc;
+	String lac;
+	String cellId;
+	String tramaGsm;
+	
+	
+
+}

@@ -1,0 +1,31 @@
+package com.alghome.loclistener;
+
+import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
+
+import com.alghome.datagetset.GsmGetSet;
+
+public class MiLocListenerGsm {
+	GsmGetSet gsmData;
+	String imei;
+	String opName;
+	String mcc;
+	String mnc;
+	String lac;
+	String cellId;
+	
+	TelephonyManager tlManager;
+	GsmCellLocation gsmCellLoc;
+	
+	public MiLocListenerGsm(String i, TelephonyManager tm, GsmCellLocation gsmCell){
+		imei = i;
+		tlManager = tm;
+		gsmCellLoc = gsmCell;
+	}
+	
+	public void listener(){
+		
+	}
+	
+
+}
