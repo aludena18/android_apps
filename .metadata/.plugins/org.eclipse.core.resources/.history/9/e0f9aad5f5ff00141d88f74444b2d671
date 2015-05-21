@@ -34,8 +34,8 @@ public class MiLocListenerGsm {
 			public void run() {
 				gsmData.setImei(tlManager.getDeviceId());
 				gsmData.setOpName(tlManager.getNetworkOperatorName().trim());
-				gsmData.setMcc(tlManager.getNetworkOperator().substring(0, 3));
-				gsmData.setMnc(tlManager.getNetworkOperator().substring(3));
+				gsmData.setMcc(tlManager.getNetworkOperator().trim());
+				gsmData.setMnc(tlManager.getNetworkOperator().trim());
 				gsmData.setLac(Integer.toString(gsmCellLoc.getLac()).trim());
 				gsmData.setCellId(Integer.toString(gsmCellLoc.getCid()).trim());
 

@@ -51,8 +51,9 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="java.util.Locale"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListenerGsm"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GsmGetSet"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

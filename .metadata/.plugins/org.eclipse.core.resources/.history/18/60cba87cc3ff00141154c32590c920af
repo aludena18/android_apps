@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,17 +75,17 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 				TimerTask task = new TimerTask() {
 					@Override
 					public void run() {
-						String tramaGPS = "" + datosGetSet.getTramaGps();
-						String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
+						String tramaGPS = "" + datosGetSet.getTramaGps().trim();
+						String tramaGSM = "" + datosGsmGetSet.getTramaGsm().trim();
 						
 						Log.d("abel--MiLocManager--GPS", tramaGPS);
 						Log.d("abel- miLocManager--GSM", tramaGSM);
 						
+						enviaData = null;
 						if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
-						else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+						else if(tramaGSM.trim().startsWith("$$V")) enviaData = tramaGSM.getBytes();
 						
 						try {
-							Log.d("miLocManager -- EnviaData", Arrays.toString(enviaData));
 							ipNumber = InetAddress.getByName("107.172.12.220");
 							DatagramSocket clSocket = new DatagramSocket();
 							DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);

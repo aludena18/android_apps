@@ -83,7 +83,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 						Log.d("abel- miLocManager--GSM", tramaGSM);
 						
 						if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
-						else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+						else if(tramaGSM.trim().startsWith("$$V")) enviaData = tramaGSM.getBytes();
 						
 						try {
 							Log.d("miLocManager -- EnviaData", Arrays.toString(enviaData));
