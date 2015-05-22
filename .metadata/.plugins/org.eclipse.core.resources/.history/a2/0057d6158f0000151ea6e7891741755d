@@ -14,19 +14,19 @@ public class FrameBuilderGsm {
 		frame = "**V," + dataGetSet.getImei() + "," +		//imei
 				" "	+ "," +									//command
 				dataGetSet.getOpName() + "," +				//event codde
-				" " + "," +									//latitud
-				" " + "," +									//longitud
+				dataGetSet.getMcc() + "," +					//latitud
+				dataGetSet.getMnc() + "," +					//longitud
 				dataGetSet.getTime() + "," +				//date time
 				" "	+ "," +									//gps status
 				" "	+ "," +									//number satellites
 				" "	+ "," +									//gsm signal
-				"9999" + "," +								//speed
-				" " + "," +									//heading
+				dataGetSet.getLac() + "," +					//speed
+				dataGetSet.getCellId() + "," +				//heading
 				" "	+ "," +									//HDOP
-				dataGetSet.getMcc() + "," +					//altitude
-				dataGetSet.getMnc()	+ "," +					//mileage
-				dataGetSet.getLac()	+ "," +					//runtime
-				dataGetSet.getCellId()	+ "," +				//Base ID
+				" " + "," +									//altitude
+				" "	+ "," +									//mileage
+				" "	+ "," +									//runtime
+				" "	+ "," +									//Base ID
 				" "	+ "," +									//Sate IO
 				"*";
 

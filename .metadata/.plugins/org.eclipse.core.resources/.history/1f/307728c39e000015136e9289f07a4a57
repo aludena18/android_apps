@@ -20,7 +20,7 @@ public class FrameBuilderGsm {
 				" "	+ "," +									//gps status
 				" "	+ "," +									//number satellites
 				" "	+ "," +									//gsm signal
-				"9999" + "," +								//speed
+				" " + "," +									//speed
 				" " + "," +									//heading
 				" "	+ "," +									//HDOP
 				dataGetSet.getMcc() + "," +					//altitude
