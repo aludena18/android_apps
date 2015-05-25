@@ -1,0 +1,61 @@
+package com.alghome.datasend;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.util.Log;
+
+import com.alghome.datagetset.GpsGetset;
+import com.alghome.datagetset.GsmGetSet;
+
+public class SendThread extends Thread{
+	GpsGetset datosGetSet;
+	GsmGetSet datosGsmGetSet;
+	byte[] enviaData = new byte[1024];
+	InetAddress ipNumber;
+	
+	public SendThread(GpsGetset gpsG, GsmGetSet gsmG, byte[] data, InetAddress ipN){
+		datosGetSet = gpsG;
+		datosGsmGetSet = gsmG;
+		enviaData = data;
+		ipNumber = ipN;
+	}
+
+	@Override
+	public void run() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				String tramaGPS = "" + datosGetSet.getTramaGps();
+				String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
+				
+				Log.d("abel--MiLocManager--GPS", tramaGPS);
+				Log.d("abel- miLocManager--GSM", tramaGSM);
+				
+				if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
+				else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+				
+				try {
+					Log.d("miLocManager -- EnviaData", Arrays.toString(enviaData));
+					ipNumber = InetAddress.getByName("107.172.12.220");
+					DatagramSocket clSocket = new DatagramSocket();
+					DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ipNumber, 21020);
+					clSocket.send(dgPacket);
+					clSocket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		};
+		timer.scheduleAtFixedRate(task, 5000, 30000);
+	}
+
+}

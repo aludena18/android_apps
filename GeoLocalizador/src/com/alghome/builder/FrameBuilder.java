@@ -12,23 +12,29 @@ public class FrameBuilder {
 
 	public String tramaGPS(){
 		frame = "$$A," + dataGetSet.getImei() + "," +		//imei
-				" "	+ "," +									//command
-				" "	+ "," +									//event codde
+				""	+ "," +									//command
+				""	+ "," +									//event code
 				dataGetSet.getLatitud() + "," +				//latitud
 				dataGetSet.getLongitud() + "," +			//longitud
 				dataGetSet.getFechayhora() + "," +			//date time
-				" "	+ "," +									//gps status
-				" "	+ "," +									//number satellites
-				" "	+ "," +									//gsm signal
+				""	+ "," +									//gps status
+				""	+ "," +									//number satellites
+				""	+ "," +									//gsm signal
 				dataGetSet.getVelocidad() + "," +			//speed
 				dataGetSet.getGiro() + ","	+				//heading
-				" "	+ "," +									//HDOP
+				""	+ "," +									//HDOP
 				dataGetSet.getAltitud() + "," +				//altitude
-				" "	+ "," +									//mileage
-				" "	+ "," +									//runtime
-				" "	+ "," +									//Base ID
-				" "	+ "," +									//Sate IO
-				"*";
+				""	+ "," +									//mileage
+				""	+ "," +									//runtime
+				""	+ "," +									//Base ID
+				""	+ "," +									//Sate IO
+				""	+ "," +									//AD
+				""	+ "," +									//RFID
+				""	+ "," +									//Customize Data
+				""	+ "," +									//Protocol Version
+				""	+ "," +									//Fuel Percentage
+				""	+ "," +									//Temperature
+				"*AB";
 
 		return frame;
 	}

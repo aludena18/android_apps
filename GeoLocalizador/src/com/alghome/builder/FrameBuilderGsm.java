@@ -13,6 +13,7 @@ public class FrameBuilderGsm {
 	public String tramaGSM(){
 		frame = "**V," + dataGetSet.getImei() + "," +		//imei
 				" "	+ "," +									//command
+				" "	+ "," +
 				dataGetSet.getOpName() + "," +				//event codde
 				" " + "," +									//latitud
 				" " + "," +									//longitud
