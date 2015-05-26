@@ -26,16 +26,15 @@ public class MiLocListener implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 		
-		long date = System.currentTimeMillis();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
-		gpsData.setFechayhora(sdf.format(date).trim());
+		long dateGps = location.getTime();
 		
-		//gpsData.setFechayhora(Long.toString(location.getTime()));
+		gpsData.setFechayhora(sdf.format(dateGps).trim());
 		gpsData.setLatitud(Double.toString(location.getLatitude()));
 		gpsData.setLongitud(Double.toString(location.getLongitude()));
 		gpsData.setVelocidad(Integer.toString((int)location.getSpeed()*18/5));
-		gpsData.setAltitud(Double.toString(location.getAltitude()));
-		gpsData.setGiro(Float.toString(location.getBearing()));
+		gpsData.setAltitud(Integer.toString((int)location.getAltitude()));
+		gpsData.setGiro(Integer.toString((int)location.getBearing()));
 		
 		FrameBuilder fb = new FrameBuilder(gpsData);
 		gpsData.setTramaGps(fb.tramaGPS());

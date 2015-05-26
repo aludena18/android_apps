@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.location.LocationListener"/>
-<fullyQualifiedTypeName name="java.lang.Double"/>
-<fullyQualifiedTypeName name="android.os.AsyncTask"/>
-<fullyQualifiedTypeName name="android.location.LocationManager"/>
-<fullyQualifiedTypeName name="com.alghome.loclistener.MiLocManager"/>
-<fullyQualifiedTypeName name="android.text.InputFilter.LengthFilter"/>
-<fullyQualifiedTypeName name="com.alghome.loclistener.DataListenerThread"/>
-<fullyQualifiedTypeName name="android.os.Looper"/>
 <fullyQualifiedTypeName name="android.os.Message"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
@@ -22,8 +14,6 @@
 <fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.collect.OpenCellIDCollectService"/>
 <fullyQualifiedTypeName name="android.webkit.GeolocationPermissions"/>
 <fullyQualifiedTypeName name="com.ginstr.android.service.opencellid.download.OpenCellIDDownloadService"/>
-<fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.preference.SwitchPreference"/>
 <fullyQualifiedTypeName name="android.widget.Switch"/>
 <fullyQualifiedTypeName name="com.alg.geolocalizadorgsm.R.id"/>
@@ -42,21 +32,32 @@
 <fullyQualifiedTypeName name="android.text.format.Time"/>
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
-<fullyQualifiedTypeName name="java.util.Locale"/>
 <fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListenerGsm"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
-<fullyQualifiedTypeName name="java.lang.Thread"/>
 <fullyQualifiedTypeName name="com.alghome.datasend.SendThread"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GpsGetset"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GsmGetSet"/>
-<fullyQualifiedTypeName name="java.net.InetAddress"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="com.alghome.geolocalizador.MainActivity"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.R.integer"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.net.InetAddress"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="com.abel.phonelocation.SendThread"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Locale"/>
+<fullyQualifiedTypeName name="android.content.BroadcastReceiver"/>
+<fullyQualifiedTypeName name="com.example.serviceboot.MainActivity"/>
+<fullyQualifiedTypeName name="com.alghome.service.ServiceBoot"/>
+<fullyQualifiedTypeName name="com.alghome.geolocalizador.MainActivity"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.example.serviceboot.ServiceBoot"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="com.alghome.geolocalizador.ServicioBoot"/>
+<fullyQualifiedTypeName name="android.app.Service"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.alghome.service.ServicioGeoBoot"/>
 </qualifiedTypeNameHistroy>

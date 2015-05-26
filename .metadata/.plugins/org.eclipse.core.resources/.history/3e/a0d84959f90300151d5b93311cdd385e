@@ -1,0 +1,5 @@
+package com.alghome.geolocalizador;
+
+public class ServicioBoot {
+
+}

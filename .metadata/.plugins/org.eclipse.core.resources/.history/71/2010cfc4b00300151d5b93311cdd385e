@@ -1,0 +1,56 @@
+package com.abel.phonelocation;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.util.Log;
+
+public class SendThread extends Thread{
+	String msj;
+	InetAddress ipNumero;
+	byte[] enviaData = new byte[1024];
+	
+	public SendThread(){
+		
+	}
+
+	@Override
+	public void run() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				try {
+					Log.d("abel", msj);
+					ipNumero = InetAddress.getByName("aludena.no-ip.biz");
+					DatagramSocket clienteSocket = new DatagramSocket();
+					enviaData = msj.getBytes();
+					DatagramPacket enviaPaquete = new DatagramPacket(enviaData, enviaData.length, ipNumero, 21020);
+					clienteSocket.send(enviaPaquete);
+					clienteSocket.close();
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SocketException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		timer.schedule(task, 10, 10000);
+	}
+	
+	public void setFrame(String m){
+		msj = m;
+	}
+
+}

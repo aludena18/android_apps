@@ -1,0 +1,48 @@
+package com.example.serviceboot;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
+import android.widget.Toast;
+
+public class ServiceBoot extends Service{
+
+	@Override
+	public IBinder onBind(Intent arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		Log.d("SERVICEBOOT", "Servicio iniciado");
+		return super.onStartCommand(intent, flags, startId);
+		//Toast.makeText(this, "Servicio iniciado", Toast.LENGTH_LONG).show();
+		//return START_STICKY;
+	}
+
+
+
+	@Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		super.onCreate();
+		Toast.makeText(this, "Servicio creado", Toast.LENGTH_LONG).show();
+		Log.d("SERVICEBOOT", "Servicio creado");
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		Toast.makeText(this, "Servicio destruido", Toast.LENGTH_LONG).show();
+		Log.d("SERVICEBOOT", "Servicio destruido");
+	}
+
+
+
+}
