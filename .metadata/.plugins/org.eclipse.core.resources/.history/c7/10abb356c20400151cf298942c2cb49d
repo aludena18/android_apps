@@ -45,8 +45,6 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 		mLocListener = new MiLocListener(mTManager.getDeviceId(), contexto);
 		mLocListenerGsm = new MiLocListenerGsm( mTManager, gsmCellLoc);
 		
-		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
-
 		datosGetSet = mLocListener.getDataGPS();
 		datosGsmGetSet = mLocListenerGsm.getDataGSM();
 	}
@@ -63,8 +61,7 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 
 	@Override
 	protected void onPostExecute(Void result) {
-		//mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
-		Log.d("onPostExecute()", "Ejecutado");
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
 	}
 
 	@Override

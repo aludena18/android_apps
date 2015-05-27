@@ -39,14 +39,13 @@ public class MiLocManager extends AsyncTask<Void, Void, Void>{
 		// TODO Auto-generated method stub
 		//super.onPreExecute();
 		mLocManager = (LocationManager)contexto.getSystemService(Context.LOCATION_SERVICE);
+		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
 		mTManager = (TelephonyManager)contexto.getSystemService(Context.TELEPHONY_SERVICE);
 		gsmCellLoc = (GsmCellLocation)mTManager.getCellLocation();
 		
 		mLocListener = new MiLocListener(mTManager.getDeviceId(), contexto);
 		mLocListenerGsm = new MiLocListenerGsm( mTManager, gsmCellLoc);
 		
-		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
-
 		datosGetSet = mLocListener.getDataGPS();
 		datosGsmGetSet = mLocListenerGsm.getDataGSM();
 	}

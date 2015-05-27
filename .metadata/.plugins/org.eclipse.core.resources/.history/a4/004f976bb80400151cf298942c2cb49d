@@ -8,7 +8,6 @@ import android.util.Log;
 import com.alghome.loclistener.MiLocManager;
 
 public class ServicioGeoBoot extends Service{
-	MiLocManager mLocManager = new MiLocManager(this);
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -21,14 +20,13 @@ public class ServicioGeoBoot extends Service{
 		// TODO Auto-generated method stub
 		//super.onCreate();
 		Log.d("SERVICIO GEO BOOT", "Servicio creado");
-		mLocManager.execute();
+		new MiLocManager(this).execute();
 	}
 
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		//super.onDestroy();
-		mLocManager.cancel(true);
 		Log.d("SERVICIO GEO BOOT", "Servicio destruido");
 	}
 

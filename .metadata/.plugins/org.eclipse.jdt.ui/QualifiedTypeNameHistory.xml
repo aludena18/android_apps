@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.os.Message"/>
-<fullyQualifiedTypeName name="android.os.Handler"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
 <fullyQualifiedTypeName name="java.net.DatagramPacket"/>
 <fullyQualifiedTypeName name="java.net.DatagramSocket"/>
@@ -27,10 +25,8 @@
 <fullyQualifiedTypeName name="android.net.wifi.p2p.WifiP2pManager.ActionListener"/>
 <fullyQualifiedTypeName name="android.animation.TimeAnimator.TimeListener"/>
 <fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
-<fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="com.alghome.builder.FrameBuilderGsm"/>
 <fullyQualifiedTypeName name="android.text.format.Time"/>
-<fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListenerGsm"/>
@@ -58,6 +54,10 @@
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="com.alghome.geolocalizador.ServicioBoot"/>
 <fullyQualifiedTypeName name="android.app.Service"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="com.alghome.service.ServicioGeoBoot"/>
+<fullyQualifiedTypeName name="com.alghome.loclistener.MiLocManager"/>
+<fullyQualifiedTypeName name="java.util.TimerTask"/>
+<fullyQualifiedTypeName name="java.util.Timer"/>
+<fullyQualifiedTypeName name="com.alghome.datasend.SendTask"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
 </qualifiedTypeNameHistroy>
