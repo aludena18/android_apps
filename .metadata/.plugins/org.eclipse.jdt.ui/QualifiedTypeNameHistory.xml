@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
-<fullyQualifiedTypeName name="java.net.DatagramPacket"/>
 <fullyQualifiedTypeName name="java.net.DatagramSocket"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="android.telephony.CellLocation"/>
@@ -24,16 +22,11 @@
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="android.net.wifi.p2p.WifiP2pManager.ActionListener"/>
 <fullyQualifiedTypeName name="android.animation.TimeAnimator.TimeListener"/>
-<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
 <fullyQualifiedTypeName name="com.alghome.builder.FrameBuilderGsm"/>
 <fullyQualifiedTypeName name="android.text.format.Time"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
-<fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListenerGsm"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="com.alghome.datasend.SendThread"/>
-<fullyQualifiedTypeName name="com.alghome.datagetset.GpsGetset"/>
-<fullyQualifiedTypeName name="com.alghome.datagetset.GsmGetSet"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
@@ -60,4 +53,11 @@
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="com.alghome.datasend.SendTask"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.location.LocationManager"/>
+<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
+<fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
+<fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
+<fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListenerGsm"/>
+<fullyQualifiedTypeName name="com.alghome.datagetset.GpsGetset"/>
+<fullyQualifiedTypeName name="com.alghome.datagetset.GsmGetSet"/>
 </qualifiedTypeNameHistroy>

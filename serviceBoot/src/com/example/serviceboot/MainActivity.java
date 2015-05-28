@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		startService(new Intent(this, ServiceBoot.class));
+		//startService(new Intent(this, ServiceBoot.class));
 	}
 
 	@Override
