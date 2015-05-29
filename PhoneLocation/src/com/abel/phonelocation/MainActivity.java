@@ -54,13 +54,12 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		
-		
 		btOff.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				/*CODIGO PARA APAGAR EL GPS*/
 				btOff.setText("Apagado");
 				btOn.setText("GPS On");
+
+				/*CODIGO PARA APAGAR EL GPS*/
 				//lm.removeUpdates(lListener);
 				Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
 				intent.putExtra("enabled", false);
@@ -77,7 +76,6 @@ public class MainActivity extends Activity {
 		lListener = new MiLocationListener();
 		lm = (LocationManager)getSystemService(LOCATION_SERVICE);
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, lListener);
-		
 		
 	}
 	
