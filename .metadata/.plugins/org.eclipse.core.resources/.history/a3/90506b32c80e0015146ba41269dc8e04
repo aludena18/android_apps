@@ -1,0 +1,109 @@
+package com.alghome.loclistener;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.TimerTask;
+
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.alghome.builder.FrameBuilder;
+import com.alghome.datagetset.GpsGetset;
+import com.alghome.datagetset.GsmGetSet;
+
+public class MiLocListener implements LocationListener{
+	GpsGetset gpsData;
+	Context context;
+	byte[] enviaData = new byte[1024];
+	GsmGetSet gsmData;
+	LocationManager locManager;
+	private Handler myHandler = null;
+	Looper looper;
+	
+	public MiLocListener(LocationManager lm, MiLocListenerGsm llG, String i, Context ctx){
+		locManager = lm;
+		gsmData = llG.getDataGSM();
+		gpsData = new GpsGetset();
+		gpsData.setImei(i);
+		context = ctx;
+	}
+	
+	@Override
+	public void onLocationChanged(Location location) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
+		long dateGps = location.getTime();
+		
+		gpsData.setFechayhora(sdf.format(dateGps).trim());
+		gpsData.setLatitud(Double.toString(location.getLatitude()));
+		gpsData.setLongitud(Double.toString(location.getLongitude()));
+		gpsData.setVelocidad(Integer.toString((int)location.getSpeed()*18/5));
+		gpsData.setAltitud(Integer.toString((int)location.getAltitude()));
+		gpsData.setGiro(Integer.toString((int)location.getBearing()));
+		
+		FrameBuilder fb = new FrameBuilder(gpsData);
+		gpsData.setTramaGps(fb.tramaGPS());
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		Log.d("MI LOC LISTENER -- " + provider, "Status = " + status);
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		String msje = "GPS Activado";
+		Log.d("abel--loclistener", msje);
+		Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		//gpsData.setTramaGps("$$V");
+		String msje = "GPS Desactivado";
+		Log.d("abel--loclistener", msje);
+		Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
+	}
+	
+	
+	public GpsGetset getDataGPS() {
+		return gpsData;
+	}
+
+	private void sendFrame(){
+		String tramaGPS = "" + gpsData.getTramaGps();
+		String tramaGSM = "" + gsmData.getTramaGsm();
+		
+		gpsData.setTramaGps("null");
+		
+		Log.d("abel--MiLocManager--GPS", tramaGPS);
+		Log.d("abel- miLocManager--GSM", tramaGSM);
+		
+		if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
+		else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+		
+		try {
+			InetAddress ip = InetAddress.getByName("107.172.12.220");
+			DatagramSocket clSocket = new DatagramSocket();
+			DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ip, 21020);
+			clSocket.send(dgPacket);
+			clSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+}
