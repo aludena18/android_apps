@@ -15,6 +15,7 @@ public class GsmGetSet implements Serializable{
 	String cellId;
 	String time;
 	String tramaGsm;
+	String evento;
 	
 	
 	public String getTime() {
@@ -65,7 +66,12 @@ public class GsmGetSet implements Serializable{
 	public void setTramaGsm(String tramaGsm) {
 		this.tramaGsm = tramaGsm;
 	}
-	
+	public String getEvento() {
+		return evento;
+	}
+	public void setEvento(String evento) {
+		this.evento = evento;
+	}
 	
 
 }

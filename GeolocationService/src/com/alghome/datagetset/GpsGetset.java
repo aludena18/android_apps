@@ -7,9 +7,7 @@ public class GpsGetset implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -493799726556289160L;
-	String mensaje;
 	String tramaGps;
-	String tramaGsm;
 	String imei;
 	String fechayhora;
 	String latitud;
@@ -17,13 +15,8 @@ public class GpsGetset implements Serializable{
 	String velocidad;
 	String altitud;
 	String giro;
+	String evento;
 	
-	public String getMensaje() {
-		return mensaje;
-	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
-	}
 	public String getImei() {
 		return imei;
 	}
@@ -72,11 +65,11 @@ public class GpsGetset implements Serializable{
 	public void setTramaGps(String tramaGps) {
 		this.tramaGps = tramaGps;
 	}
-	public String getTramaGsm() {
-		return tramaGsm;
+	public String getEvento() {
+		return evento;
 	}
-	public void setTramaGsm(String tramaGsm) {
-		this.tramaGsm = tramaGsm;
+	public void setEvento(String evento) {
+		this.evento = evento;
 	}
 	
 	

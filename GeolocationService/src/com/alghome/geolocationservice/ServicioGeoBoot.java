@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
@@ -23,9 +25,9 @@ import com.alghome.loclistener.MiLocListenerGsm;
 import com.alghome.loclistener.MyLocListener;
 
 public class ServicioGeoBoot extends Service{
-	static final int REPORT_DELAY_SCREEN_ON = 60;
-	static final int REPORT_DELAY_SCREEN_OFF = 120;
-	static final int SERVER_PORT = 21020;
+	static final int REPORT_DELAY_SCREEN_ON = 120;
+	static final int REPORT_DELAY_SCREEN_OFF = 300;
+	static final int SERVER_PORT = 21022;
 	static final String SERVER_IP = "107.172.12.220";
 	
 	LocationManager mLocManager;
@@ -36,7 +38,9 @@ public class ServicioGeoBoot extends Service{
 	
 	private Handler mHandler;
 	private Runnable mRunnable;
-	private boolean flag = false;
+	
+	PowerManager mgr;
+	PowerManager.WakeLock wakeLock;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -49,7 +53,6 @@ public class ServicioGeoBoot extends Service{
 		// TODO Auto-generated method stub
 		//super.onCreate();
         locManager();
-		//startTimer(REPORT_DELAY_SCREEN_ON);
 		Log.d("SERVICIO GEO BOOT", "Servicio creado");
 		
 		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
@@ -58,6 +61,7 @@ public class ServicioGeoBoot extends Service{
         registerReceiver(mReceiver, filter);
 	}
 
+	@SuppressLint("Wakelock")
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
@@ -66,17 +70,26 @@ public class ServicioGeoBoot extends Service{
 		
 		if(intent != null){
 			boolean screenOn = intent.getBooleanExtra("screen_state", false);
+			
 			if (!screenOn) {
-				// YOUR CODE
 				System.out.println("ON");
-				startTimer(REPORT_DELAY_SCREEN_ON);
+				/*if(wakeLock!=null) {
+					System.out.println("Release");
+					mHandler.removeCallbacks(mRunnable);
+					wakeLock.release();
+				}*/
+				if(mHandler!=null) mHandler.removeCallbacks(mRunnable);
+				startTimer(REPORT_DELAY_SCREEN_ON,"01");
+				
 			} else {
-				// YOUR CODE
 				System.out.println("OFF");
-				//startTimer(REPORT_DELAY_SCREEN_OFF);
+				if(mHandler!=null) mHandler.removeCallbacks(mRunnable);
+				//mgr = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
+				//wakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+				//wakeLock.acquire();
+				startTimer(REPORT_DELAY_SCREEN_OFF,"02");
 			}
 		}
-		
 		return START_STICKY;
 	}
 
@@ -88,7 +101,6 @@ public class ServicioGeoBoot extends Service{
 		mLocManager.removeUpdates(mLocListener);
 		Log.d("SERVICIO GEO BOOT", "Servicio destruido");
 	}
-
 
 	private void locManager(){
 		mLocManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
@@ -103,9 +115,10 @@ public class ServicioGeoBoot extends Service{
 		datosGsmGetSet = mLocListenerGsm.getDataGSM();
 	}
 	
-	private void startTimer(final int tiempo) {
+	private void startTimer(final int tiempo, final String code) {
+		datosGetSet.setEvento(code);
+		datosGsmGetSet.setEvento(code);
 		mHandler = new Handler();
-
 		mRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -124,11 +137,11 @@ public class ServicioGeoBoot extends Service{
 							}
 						}).start();
 					}
-				}, 20000);
-				mHandler.postDelayed(this, tiempo*1000);
+				}, 20000);									//delay de sincronizacion gps
+				mHandler.postDelayed(this, tiempo*1000);	//delay principal
 			}
 		};
-		mHandler.postDelayed(mRunnable, 1000);
+		mHandler.postDelayed(mRunnable, 10000);				//delay de inicio de timer
 	}
 	
 	private void sendFrame(){

@@ -40,7 +40,7 @@ public class MiLocListenerGsm {
 				gsmData.setCellId(Integer.toString(gsmCellLoc.getCid()).trim());
 
 				long date = System.currentTimeMillis();
-				SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd/ HH:mm:ss",Locale.US);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
 				gsmData.setTime(sdf.format(date).trim());
 				
 				FrameBuilderGsm fbGsm = new FrameBuilderGsm(gsmData);

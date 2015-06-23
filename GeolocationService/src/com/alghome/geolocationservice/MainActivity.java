@@ -15,6 +15,26 @@ public class MainActivity extends Activity {
 		
 		startService(new Intent(this, ServicioGeoBoot.class));
 	}
+	
+	
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		System.out.println("MainActivity Destroy");
+		super.onDestroy();
+	}
+
+
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		System.out.println("MainActivity Pause");
+		super.onPause();
+	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

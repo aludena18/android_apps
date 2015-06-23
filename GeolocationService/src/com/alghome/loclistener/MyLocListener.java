@@ -25,7 +25,7 @@ public class MyLocListener implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss",Locale.US);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
 		long dateGps = location.getTime();
 		long dateCel = System.currentTimeMillis();
 		
@@ -51,7 +51,7 @@ public class MyLocListener implements LocationListener{
 	public void onProviderEnabled(String provider) {
 		String msje = "GPS Activado";
 		Log.d("abel--loclistener", msje);
-		Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
+		//Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class MyLocListener implements LocationListener{
 		//gpsData.setTramaGps("$$V");
 		String msje = "GPS Desactivado";
 		Log.d("abel--loclistener", msje);
-		Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
+		//Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
 	}
 	
 	
