@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.alg.geolocalizadorgsm.R.id"/>
-<fullyQualifiedTypeName name="java.lang.StringBuffer"/>
-<fullyQualifiedTypeName name="java.net.URL"/>
-<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
-<fullyQualifiedTypeName name="java.io.BufferedReader"/>
-<fullyQualifiedTypeName name="com.alghome.builder.FrameBuilder"/>
-<fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="android.net.wifi.p2p.WifiP2pManager.ActionListener"/>
 <fullyQualifiedTypeName name="android.animation.TimeAnimator.TimeListener"/>
 <fullyQualifiedTypeName name="com.alghome.builder.FrameBuilderGsm"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="com.alghome.datasend.SendThread"/>
-<fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.R.integer"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
@@ -33,7 +25,6 @@
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocManager"/>
 <fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
 <fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
-<fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="android.text.format.Time"/>
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="com.alghome.geolocationservice.MainActivity"/>
@@ -42,22 +33,31 @@
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListenerGsm"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GsmGetSet"/>
 <fullyQualifiedTypeName name="com.alghome.loclistener.MiLocListener"/>
-<fullyQualifiedTypeName name="android.location.LocationManager"/>
 <fullyQualifiedTypeName name="android.os.Looper"/>
 <fullyQualifiedTypeName name="com.alghome.datagetset.GpsGetset"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="java.lang.Thread"/>
-<fullyQualifiedTypeName name="java.lang.Runnable"/>
 <fullyQualifiedTypeName name="android.content.BroadcastReceiver"/>
 <fullyQualifiedTypeName name="com.alghome.geolocationservice.ReceptorBoot"/>
 <fullyQualifiedTypeName name="com.alghome.geolocationservice.ServicioGeoBoot"/>
 <fullyQualifiedTypeName name="android.os.PowerManager"/>
 <fullyQualifiedTypeName name="android.os.PowerManager.WakeLock"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="android.hardware.SensorEventListener"/>
 <fullyQualifiedTypeName name="android.hardware.SensorManager"/>
 <fullyQualifiedTypeName name="android.hardware.Sensor"/>
 <fullyQualifiedTypeName name="android.app.Activity"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="java.lang.Runnable"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="android.location.LocationListener"/>
+<fullyQualifiedTypeName name="android.location.LocationManager"/>
+<fullyQualifiedTypeName name="com.javatechig.classes.MyLocListener"/>
+<fullyQualifiedTypeName name="com.javatechig.alarmservice.AlarmReceiver"/>
+<fullyQualifiedTypeName name="com.javatechig.alarmservice.MainActivity"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="android.os.Parcelable"/>
+<fullyQualifiedTypeName name="com.javatechig.classes.ManagerGetSet"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,172 @@
+package com.alghome.geolocationservice;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+import android.annotation.SuppressLint;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.LocationManager;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.PowerManager;
+import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
+import android.util.Log;
+
+import com.alghome.datagetset.GpsGetset;
+import com.alghome.datagetset.GsmGetSet;
+import com.alghome.loclistener.MiLocListenerGsm;
+import com.alghome.loclistener.MyLocListener;
+
+public class ServicioGeoBoot extends Service{
+	static final int REPORT_DELAY_SCREEN_ON = 120;
+	static final int REPORT_DELAY_SCREEN_OFF = 300;
+	static final int SERVER_PORT = 13000;
+	static final String SERVER_IP = "190.223.20.12";
+	
+	LocationManager mLocManager;
+	MyLocListener mLocListener;
+	MiLocListenerGsm mLocListenerGsm;
+	GpsGetset datosGetSet;
+	GsmGetSet datosGsmGetSet;
+	
+	private Handler mHandler;
+	private Runnable mRunnable;
+	
+	PowerManager mgr;
+	PowerManager.WakeLock wakeLock;
+	
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		//super.onCreate();
+        locManager();
+		Log.d("SERVICIO GEO BOOT", "Servicio creado");
+		
+		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        BroadcastReceiver mReceiver = new ScreenReceiver();
+        registerReceiver(mReceiver, filter);
+	}
+
+	@SuppressLint("Wakelock")
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		//return super.onStartCommand(intent, flags, startId);
+		Log.d("SERVICIO GEO BOOT", "Servicio iniciado");
+		
+		if(intent != null){
+			boolean screenOn = intent.getBooleanExtra("screen_state", false);
+			
+			if (!screenOn) {
+				System.out.println("ON");
+				if(wakeLock!=null) {
+					System.out.println("Release");
+					mHandler.removeCallbacks(mRunnable);
+					wakeLock.release();
+				}
+				startTimer(REPORT_DELAY_SCREEN_ON,"01");
+				
+			} else {
+				System.out.println("OFF");
+				if(mHandler!=null) mHandler.removeCallbacks(mRunnable);
+				mgr = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
+				wakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+				wakeLock.acquire();
+				startTimer(REPORT_DELAY_SCREEN_OFF,"02");
+			}
+		}
+		return START_STICKY;
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		//super.onDestroy();
+		//mLocManager.cancel(true);
+		mLocManager.removeUpdates(mLocListener);
+		Log.d("SERVICIO GEO BOOT", "Servicio destruido");
+	}
+
+	private void locManager(){
+		mLocManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+		TelephonyManager mTManager = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+		GsmCellLocation gsmCellLoc = (GsmCellLocation)mTManager.getCellLocation();
+		mLocListenerGsm = new MiLocListenerGsm( mTManager, gsmCellLoc);
+		mLocListener = new MyLocListener(mTManager.getDeviceId(), this);
+		
+		//mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+
+		datosGetSet = mLocListener.getDataGPS();
+		datosGsmGetSet = mLocListenerGsm.getDataGSM();
+	}
+	
+	private void startTimer(final int tiempo, final String code) {
+		datosGetSet.setEvento(code);
+		datosGsmGetSet.setEvento(code);
+		mHandler = new Handler();
+		mRunnable = new Runnable() {
+			@Override
+			public void run() {
+				Log.e("Handlers", "Calls");
+				mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+				
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						Log.e("SERVICIO GEOBOOT", "After 20 secs");
+						mLocManager.removeUpdates(mLocListener);
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								sendFrame();
+							}
+						}).start();
+					}
+				}, 20000);									//delay de sincronizacion gps
+				mHandler.postDelayed(this, tiempo*1000);	//delay principal
+			}
+		};
+		mHandler.postDelayed(mRunnable, 10000);				//delay de inicio de timer
+	}
+	
+	private void sendFrame(){
+		byte[] enviaData = new byte[1024];
+		String tramaGPS = "" + datosGetSet.getTramaGps();
+		String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
+		
+		datosGetSet.setTramaGps("null");
+		
+		Log.d("abel--MiLocManager--GPS", tramaGPS);
+		Log.d("abel- miLocManager--GSM", tramaGSM);
+		
+		if(tramaGPS.trim().startsWith("$$A")){ enviaData = tramaGPS.getBytes();
+		//else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+		
+		try {
+			InetAddress ip = InetAddress.getByName(SERVER_IP);
+			DatagramSocket clSocket = new DatagramSocket();
+			DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ip, SERVER_PORT);
+			clSocket.send(dgPacket);
+			clSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	}
+
+}

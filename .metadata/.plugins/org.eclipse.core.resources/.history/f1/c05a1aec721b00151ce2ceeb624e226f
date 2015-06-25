@@ -1,0 +1,27 @@
+package com.javatechig.classes;
+
+import java.io.Serializable;
+
+import android.location.LocationManager;
+
+@SuppressWarnings("serial")
+public class ManagerGetSet implements Serializable{
+
+	
+	LocationManager locationManager;
+	MyLocListener myLocationListener;
+	
+	public LocationManager getLocationManager() {
+		return locationManager;
+	}
+	public void setLocationManager(LocationManager locationManager) {
+		this.locationManager = locationManager;
+	}
+	public MyLocListener getMyLocationListener() {
+		return myLocationListener;
+	}
+	public void setMyLocationListener(MyLocListener myLocationListener) {
+		this.myLocationListener = myLocationListener;
+	}
+	
+}

@@ -1,0 +1,7 @@
+package com.javatechig.classes;
+
+import java.io.Serializable;
+
+public class ManagerGetSet implements Serializable{
+
+}

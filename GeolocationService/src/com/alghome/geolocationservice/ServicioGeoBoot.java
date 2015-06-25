@@ -27,8 +27,8 @@ import com.alghome.loclistener.MyLocListener;
 public class ServicioGeoBoot extends Service{
 	static final int REPORT_DELAY_SCREEN_ON = 120;
 	static final int REPORT_DELAY_SCREEN_OFF = 300;
-	static final int SERVER_PORT = 21022;
-	static final String SERVER_IP = "107.172.12.220";
+	static final int SERVER_PORT = 13000;
+	static final String SERVER_IP = "190.223.20.12";
 	
 	LocationManager mLocManager;
 	MyLocListener mLocListener;
@@ -73,20 +73,19 @@ public class ServicioGeoBoot extends Service{
 			
 			if (!screenOn) {
 				System.out.println("ON");
-				/*if(wakeLock!=null) {
+				if(wakeLock!=null) {
 					System.out.println("Release");
 					mHandler.removeCallbacks(mRunnable);
 					wakeLock.release();
-				}*/
-				if(mHandler!=null) mHandler.removeCallbacks(mRunnable);
+				}
 				startTimer(REPORT_DELAY_SCREEN_ON,"01");
 				
 			} else {
 				System.out.println("OFF");
 				if(mHandler!=null) mHandler.removeCallbacks(mRunnable);
-				//mgr = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
-				//wakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
-				//wakeLock.acquire();
+				mgr = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
+				wakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+				wakeLock.acquire();
 				startTimer(REPORT_DELAY_SCREEN_OFF,"02");
 			}
 		}
@@ -149,13 +148,13 @@ public class ServicioGeoBoot extends Service{
 		String tramaGPS = "" + datosGetSet.getTramaGps();
 		String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
 		
-		datosGetSet.setTramaGps("null");
+		//datosGetSet.setTramaGps("null");
 		
 		Log.d("abel--MiLocManager--GPS", tramaGPS);
 		Log.d("abel- miLocManager--GSM", tramaGSM);
 		
 		if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
-		else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+		//else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
 		
 		try {
 			InetAddress ip = InetAddress.getByName(SERVER_IP);
