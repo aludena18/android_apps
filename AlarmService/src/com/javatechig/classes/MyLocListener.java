@@ -12,8 +12,13 @@ import android.util.Log;
 public class MyLocListener implements LocationListener{
 	GpsGetset gpsData = new GpsGetset();
 	Context context;
+	SimpleDateFormat sdf;
+	
+	private long dateCel;
+	private String frame;
 	
 	public MyLocListener(String i, Context ctx){
+		sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
 		gpsData.setImei(i);
 		context = ctx;
 	}
@@ -21,9 +26,7 @@ public class MyLocListener implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
-		long dateGps = location.getTime();
-		long dateCel = System.currentTimeMillis();
+		dateCel = System.currentTimeMillis();
 		
 		gpsData.setFechayhora(sdf.format(dateCel).trim());
 		gpsData.setLatitud(Double.toString(location.getLatitude()));
@@ -32,10 +35,9 @@ public class MyLocListener implements LocationListener{
 		gpsData.setAltitud(Integer.toString((int)location.getAltitude()));
 		gpsData.setGiro(Integer.toString((int)location.getBearing()));
 		
-		FrameBuilder fb = new FrameBuilder(gpsData);
-		gpsData.setTramaGps(fb.tramaGPS());
-		
-		Log.d("MYLOCMANAGER", "Trama : " + fb.tramaGPS());
+		buildFrame();
+		gpsData.setTramaGps(frame);
+		Log.d("MYLOCMANAGER", "Trama : " + frame);
 	}
 
 	@Override
@@ -47,15 +49,12 @@ public class MyLocListener implements LocationListener{
 	public void onProviderEnabled(String provider) {
 		String msje = "GPS Activado";
 		Log.d("abel--loclistener", msje);
-		//Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		//gpsData.setTramaGps("$$V");
 		String msje = "GPS Desactivado";
 		Log.d("abel--loclistener", msje);
-		//Toast.makeText(context, msje, Toast.LENGTH_LONG).show();
 	}
 	
 	
@@ -63,6 +62,32 @@ public class MyLocListener implements LocationListener{
 		return gpsData;
 	}
 
-	
+	private void buildFrame(){
+		frame = "$$A123," + gpsData.getImei() + "," +		//imei
+				"AAA"	+ "," +								//command
+				//"0001"	+ "," +								//identifier udp
+				"30"	+ "," +							//event code
+				gpsData.getLatitud() + "," +			//latitud
+				gpsData.getLongitud() + "," +			//longitud
+				gpsData.getFechayhora() + "," +			//date time
+				"A"	+ "," +								//gps status
+				"8"	+ "," +								//number satellites
+				"19"	+ "," +							//gsm signal
+				gpsData.getVelocidad() + "," +			//speed
+				gpsData.getGiro() + ","	+				//heading
+				"1.0"	+ "," +							//HDOP
+				gpsData.getAltitud() + "," +			//altitude
+				"0"	+ "," +								//mileage
+				"0"	+ "," +								//runtime
+				"000|0|0000|0000"	+ "," +					//Base ID
+				"0000"	+ "," +								//Sate IO
+				"0000|0000|0000|0000|0000"	+ "," +			//AD
+				""	+ "," +									//RFID
+				//""	+ "," +								//Customize Data
+				//""	+ "," +								//Protocol Version
+				//""	+ "," +								//Fuel Percentage
+				//""	+ "," +								//Temperature
+				"*12";
+	}
 	
 }

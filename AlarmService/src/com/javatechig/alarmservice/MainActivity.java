@@ -34,34 +34,37 @@ public class MainActivity extends Activity {
         Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         
+        cancel();
+        start();
         
 		findViewById(R.id.startAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start();
+                //start();
             }
         });
 
         findViewById(R.id.stopAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancel();
+                //cancel();
             }
         });
 
         findViewById(R.id.stopAlarmAt10).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startAt10();
+                //startAt10();
             }
         });
     }
 
     public void start() {
+    	long interval = 1000*60*TIMER_TIME;
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        long interval = 1000*60*TIMER_TIME;
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        //manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
         Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
         System.out.println("Alarm Set");
     }

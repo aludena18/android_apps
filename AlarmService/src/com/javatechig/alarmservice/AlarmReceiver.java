@@ -27,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	
 	static final int SINC_TIME = 15;
 	static final int SERVER_PORT = 21022;
-	static final String SERVER_IP = "107.172.12.220";
+	static final String SERVER_IP = "107.172.12.220";	//190.223.20.12
 	
 	GpsGetset datosGetSet;
 	GsmGetSet datosGsmGetSet;
@@ -54,8 +54,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd/ HH:mm:ss",Locale.US);
 		
         // For our recurring task, we'll just display a message
+		//Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
 		msj = "Im Running -- " + sdf.format(date).trim();
-        Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
         System.out.println(msj);
         
         
@@ -63,7 +63,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				Log.e("SERVICIO GEOBOOT", "After 15 secs");
+				Log.e("SERVICIO GEOBOOT", "After " + SINC_TIME + " secs");
 				mLocManager.removeUpdates(mLocListener);
 				new Thread(new Runnable() {
 					@Override
@@ -122,5 +122,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 }

@@ -7,4 +7,4 @@ logcat.view.colsize.TID=62
 logcat.view.colsize.Tag=195
 logcat.view.colsize.Text=682
 logcat.view.colsize.Time=165
-logcat.view.filters.list=name\: 'com.alghome.hadler', tag\: '', text\: '', pid\: '', app\: '', level\: 'verbose', 
+logcat.view.filters.list=name\: 'com.alghome.hadler', tag\: '', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'com.javatechig.alarmservice', tag\: '', text\: '', pid\: '', app\: 'com.javatechig.alarmservice', level\: 'verbose', 

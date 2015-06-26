@@ -12,24 +12,24 @@ public class FrameBuilder {
 	public String tramaGPS(){
 		frame = "$$A123," + dataGetSet.getImei() + "," +		//imei
 				"AAA"	+ "," +									//command
-				//"0001"	+ "," +									//identifier udp
+				//"0001"	+ "," +								//identifier udp
 				dataGetSet.getEvento()	+ "," +				//event code
 				dataGetSet.getLatitud() + "," +				//latitud
 				dataGetSet.getLongitud() + "," +			//longitud
 				dataGetSet.getFechayhora() + "," +			//date time
 				"A"	+ "," +									//gps status
-				"10"	+ "," +									//number satellites
-				"19"	+ "," +									//gsm signal
+				"8"	+ "," +									//number satellites
+				"19"	+ "," +								//gsm signal
 				dataGetSet.getVelocidad() + "," +			//speed
 				dataGetSet.getGiro() + ","	+				//heading
-				"1.0"	+ "," +									//HDOP
+				"1.0"	+ "," +								//HDOP
 				dataGetSet.getAltitud() + "," +				//altitude
 				"0"	+ "," +									//mileage
 				"0"	+ "," +									//runtime
-				"716|6|045E|0B1A"	+ "," +									//Base ID
+				"000|0|0000|0000"	+ "," +						//Base ID
 				"0000"	+ "," +									//Sate IO
-				"0000|0000|0000|0A2D|0BAA"	+ "," +									//AD
-				""	+ "," +									//RFID
+				"0000|0000|0000|0000|0000"	+ "," +				//AD
+				""	+ "," +										//RFID
 				//""	+ "," +									//Customize Data
 				//""	+ "," +									//Protocol Version
 				//""	+ "," +									//Fuel Percentage
