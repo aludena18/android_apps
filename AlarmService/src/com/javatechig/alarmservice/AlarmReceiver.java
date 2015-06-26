@@ -13,22 +13,28 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.javatechig.classes.GpsGetset;
+import com.javatechig.classes.GsmGetSet;
+import com.javatechig.classes.MiLocListenerGsm;
 import com.javatechig.classes.MyLocListener;
 
 public class AlarmReceiver extends BroadcastReceiver {
 	String msj;
-	String me, ms;
+	
+	static final int SINC_TIME = 15;
 	static final int SERVER_PORT = 21022;
 	static final String SERVER_IP = "107.172.12.220";
 	
 	GpsGetset datosGetSet;
+	GsmGetSet datosGsmGetSet;
+	
 	LocationManager mLocManager;
 	MyLocListener mLocListener;
-	
+	MiLocListenerGsm mLocListenerGsm;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -38,7 +44,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 		TelephonyManager mTManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 		mLocListener = new MyLocListener(mTManager.getDeviceId(), context);
 		mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+		GsmCellLocation gsmCellLoc = (GsmCellLocation)mTManager.getCellLocation();
+		mLocListenerGsm = new MiLocListenerGsm( mTManager, gsmCellLoc);
 		datosGetSet = mLocListener.getDataGPS();
+		datosGsmGetSet = mLocListenerGsm.getDataGSM();
 		
     	/*Hora del sistema*/
     	long date = System.currentTimeMillis();
@@ -54,16 +63,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				Log.e("SERVICIO GEOBOOT", "After 10 secs");
+				Log.e("SERVICIO GEOBOOT", "After 15 secs");
 				mLocManager.removeUpdates(mLocListener);
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						sendFrame();
+						System.out.println("Enviado");
 					}
 				}).start();
 			}
-		}, 10000);	
+		}, SINC_TIME*1000);	
         
         /*new Thread(new Runnable() {
 			@Override
@@ -92,13 +102,15 @@ public class AlarmReceiver extends BroadcastReceiver {
     private void sendFrame(){
 		byte[] enviaData = new byte[1024];
 		String tramaGPS = "" + datosGetSet.getTramaGps();
+		String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
 		
-		//datosGetSet.setTramaGps("null");
+		datosGetSet.setTramaGps("null");
 		
 		Log.d("abel--MiLocManager--GPS", tramaGPS);
+		Log.d("abel- miLocManager--GSM", tramaGSM);
 		
 		if(tramaGPS.trim().startsWith("$$A")) enviaData = tramaGPS.getBytes();
-		//else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
+		else if(tramaGSM.trim().startsWith("**V")) enviaData = tramaGSM.getBytes();
 		
 		try {
 			InetAddress ip = InetAddress.getByName(SERVER_IP);
@@ -106,7 +118,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 			DatagramPacket dgPacket = new DatagramPacket(enviaData, enviaData.length, ip, SERVER_PORT);
 			clSocket.send(dgPacket);
 			clSocket.close();
-			System.out.println("Enviado");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
