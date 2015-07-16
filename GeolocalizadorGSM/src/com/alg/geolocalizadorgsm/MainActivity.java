@@ -46,6 +46,10 @@ public class MainActivity extends Activity implements OnClickListener{
 		String imei = tlfManager.getDeviceId();
 		String cellLoc = tlfManager.getCellLocation().toString();
 		
+		String cellLocData[] = cellLoc.split(",");
+		String cellLac = cellLocData[0];
+		String cellId = cellLocData[1];
+		
 		String simOperator = tlfManager.getSimOperator();
 		
 		GsmCellLocation gsmCelLoc = (GsmCellLocation)tlfManager.getCellLocation();
@@ -60,7 +64,7 @@ public class MainActivity extends Activity implements OnClickListener{
 								"OP CODE = " + operatorCode + "\n" +
 								"SIM OP = " + simOperator + "\n" +
 								"IMEI = " + imei + "\n" +
-								"CELL LOC = " + cellLoc + "\n" +
+								"CELL LOC = " + cellLoc + " : " + cellLac.substring(1) + " / " + cellId +"\n" +
 								"CELL ID = " + cid + "\n" +
 								"LAC = " + lac + "\n" +
 								"Fecha Hora = " + dateString + "\n"

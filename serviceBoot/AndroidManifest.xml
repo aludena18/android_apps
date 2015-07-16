@@ -26,13 +26,8 @@
             </intent-filter>
         </activity>
         
-        <service android:name=".ServiceBoot">
-            <intent-filter >
-                <action android:name="com.example.serviceboot.MyService"/>
-            </intent-filter>
-        </service>
-        
-        <receiver android:name=".ReceiverBoot">
+        <receiver android:name=".ReceiverBoot"
+            android:enabled="true">
             <intent-filter >
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <category android:name="android.intent.category.HOME"/>

@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-task-tag-projects-already-scanned=RemoteSystemsTempFiles,ClienteUDP,GeoLocalizador,Java Sockets UDP_TCP,MyGps,PhoneLocation,Handler,GeolocalizadorGSM,serviceBoot,GeolocationService,MovementSensor,appcompat_v7,AlarmService
+task-tag-projects-already-scanned=RemoteSystemsTempFiles,ClienteUDP,GeoLocalizador,Java Sockets UDP_TCP,MyGps,PhoneLocation,Handler,GeolocalizadorGSM,serviceBoot,GeolocationService,MovementSensor,appcompat_v7,AlarmService,AlarmServiceLocation

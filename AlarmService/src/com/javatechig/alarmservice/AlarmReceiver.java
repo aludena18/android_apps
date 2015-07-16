@@ -25,7 +25,7 @@ import com.javatechig.classes.MyLocListener;
 public class AlarmReceiver extends BroadcastReceiver {
 	String msj;
 	
-	static final int SINC_TIME = 15;
+	static final int SINC_TIME = 20;
 	static final int SERVER_PORT = 21022;
 	static final String SERVER_IP = "107.172.12.220";	//190.223.20.12
 	
@@ -49,6 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		datosGetSet = mLocListener.getDataGPS();
 		datosGsmGetSet = mLocListenerGsm.getDataGSM();
 		
+		System.out.println(""+datosGsmGetSet.getTime());
     	/*Hora del sistema*/
     	long date = System.currentTimeMillis();
 		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd/ HH:mm:ss",Locale.US);
@@ -105,6 +106,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		String tramaGSM = "" + datosGsmGetSet.getTramaGsm();
 		
 		datosGetSet.setTramaGps("null");
+		System.out.println("sendframe = " + datosGsmGetSet.getTime());
 		
 		Log.d("abel--MiLocManager--GPS", tramaGPS);
 		Log.d("abel- miLocManager--GSM", tramaGSM);

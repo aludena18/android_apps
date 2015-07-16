@@ -1,7 +1,5 @@
 package com.javatechig.alarmservice;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -47,24 +45,18 @@ public class MainActivity extends Activity {
         findViewById(R.id.stopAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //cancel();
+                cancel();
             }
         });
 
-        findViewById(R.id.stopAlarmAt10).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startAt10();
-            }
-        });
     }
 
     public void start() {
     	long interval = 1000*60*TIMER_TIME;
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        //manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        
+    	AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        
         Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
         System.out.println("Alarm Set");
     }
@@ -76,19 +68,5 @@ public class MainActivity extends Activity {
         System.out.println("Alarm Canceled");
     }
 
-    public void startAt10() {
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 1000 * 60 * 20;
-
-        /* Set the alarm to start at 10:30 AM */
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 30);
-
-        /* Repeating on every 20 minutes interval */
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                interval, pendingIntent);
-    }
 
 }
