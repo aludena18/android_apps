@@ -82,20 +82,27 @@ public class AlarmBreceiver extends BroadcastReceiver{
 		Log.d("abel--MiLocManager--GSM", frameGSM);
 		Log.d("abel- miLocManager--GPS", frameGPS);
 
-		if(frameGPS.trim().startsWith("$$A")){ dataToSend = frameGPS.getBytes();
-		//else if(frameGSM.trim().startsWith("**V")) dataToSend = frameGSM.getBytes();
-
+		if(frameGPS.trim().startsWith("$$A")){
+			dataToSend = frameGPS.getBytes();
+			send(dataToSend);
+		}
+		/*else if(frameGSM.trim().startsWith("**V")){
+			dataToSend = frameGSM.getBytes();
+			send(dataToSend);
+		}*/
+	}
+	
+	private void send(byte[] d2s){
 		try {
 			InetAddress ip = InetAddress.getByName(SERVER_IP);
 			DatagramSocket clSocket = new DatagramSocket();
-			DatagramPacket dgPacket = new DatagramPacket(dataToSend, dataToSend.length, ip, SERVER_PORT);
+			DatagramPacket dgPacket = new DatagramPacket(d2s, d2s.length, ip, SERVER_PORT);
 			clSocket.send(dgPacket);
 			clSocket.close();
-			System.out.println("Enviado : " + new String(dataToSend));
+			System.out.println("Enviado : " + new String(d2s));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
 		}
 	}
 
@@ -105,7 +112,7 @@ public class AlarmBreceiver extends BroadcastReceiver{
 			locationManager = null;
 			locListenerGps = null;
 			locListenerGsm = null;
-			Log.e("ALARM RECEIVER", "locationManager and locListenerGps have been removed");
+			Log.e("ALARM RECEIVER", "locationManager y locListenerGps han sido removidos");
 		}
 	}
 

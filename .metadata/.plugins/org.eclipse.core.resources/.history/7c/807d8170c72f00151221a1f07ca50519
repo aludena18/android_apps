@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Alarm Service Location</string>
+    <string name="hello_world">Android version 4.4.4</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="etqBtnPanic">Panic Button</string>
+    <string name="etqTxvDireccion">Esperando direccion...</string>
+
+</resources>

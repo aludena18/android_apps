@@ -15,6 +15,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -146,8 +148,6 @@ public class MainActivity extends Activity {
 	}
 
 
-
-
 	public void start(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -194,6 +194,7 @@ public class MainActivity extends Activity {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			btPanic.setTextColor(Color.YELLOW);
 			btPanic.setEnabled(true);
 		}
 	}

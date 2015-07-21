@@ -15,7 +15,7 @@ public class LocationListenerGsm {
 	GsmCellLocation gsmCellLocation;
 	SimpleDateFormat sdf;
 	String cellLocation;
-	
+
 	private long date;
 
 	public LocationListenerGsm(TelephonyManager tm, String ev){
@@ -32,11 +32,13 @@ public class LocationListenerGsm {
 		date = System.currentTimeMillis();
 		gsmData.setTime(sdf.format(date).trim());
 		gsmData.setImei(tlManager.getDeviceId());
-		gsmData.setOpName(tlManager.getNetworkOperatorName().trim());
-		gsmData.setMcc(tlManager.getNetworkOperator().substring(0, 3));
-		gsmData.setMnc(tlManager.getNetworkOperator().substring(3));
-		gsmData.setLac(Integer.toString(gsmCellLocation.getLac()).trim());
-		gsmData.setCellId(Integer.toString(gsmCellLocation.getCid()).trim());
+		if(gsmCellLocation!=null){
+			gsmData.setOpName(tlManager.getNetworkOperatorName().trim());
+			gsmData.setMcc(tlManager.getNetworkOperator().substring(0, 3));
+			gsmData.setMnc(tlManager.getNetworkOperator().substring(3));
+			gsmData.setLac(Integer.toString(gsmCellLocation.getLac()).trim());
+			gsmData.setCellId(Integer.toString(gsmCellLocation.getCid()).trim());
+		}
 		buildFrame();
 		return gsmData;
 	}

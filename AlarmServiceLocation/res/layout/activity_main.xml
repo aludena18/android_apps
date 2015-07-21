@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/fondo1"
+    android:background="#0B243B"
     tools:context="com.alg.alarmservicelocation.MainActivity" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:text="@string/hello_world" />
 
     <LinearLayout
@@ -21,18 +22,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:textColor="#ffffff"
             android:text="@string/etqTxvDireccion" />
     </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="20dp"
-        android:layout_width="wrap_content"
+        android:paddingTop="40dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="horizontal" >
         <Button
             android:id="@+id/btnPanic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:text="@string/etqBtnPanic" />
     </LinearLayout>
 
