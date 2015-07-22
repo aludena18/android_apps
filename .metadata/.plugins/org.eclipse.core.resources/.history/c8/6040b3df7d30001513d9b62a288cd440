@@ -147,6 +147,7 @@ public class MainActivity extends Activity {
 		System.out.println("locationManagerMain removido");
 	}
 
+
 	public void start(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());

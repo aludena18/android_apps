@@ -27,14 +27,10 @@ public class AlarmBreceiver extends BroadcastReceiver{
 	LocationListenerGsm locListenerGsm = null;
 
 	static final int SINC_TIME = 40;
-	static final String EVENT_NUMBER = "35";
-
 	static final int SERVER_PORT = 13000;
 	static final String SERVER_IP = "190.223.20.12";			//VPS=107.172.12.220/21020 ; Servidor Hunter=190.223.20.12/13000
+	static final String EVENT_NUMBER = "35";
 
-	static final int VPS_SERVER_PORT = 21022;
-	static final String VPS_SERVER_IP = "107.172.12.220";
-	
 	GsmData gsmData;
 	GpsData gpsData;
 
@@ -77,8 +73,7 @@ public class AlarmBreceiver extends BroadcastReceiver{
 			}
 		}, SINC_TIME*1000);
 	}
-	
-	//ENVIO DE LA TRAMA DE DATOS GPS Y GSM
+
 	private void sendFrame(){
 		byte[] dataToSend = new byte[1024];
 		String frameGSM = "" + locListenerGsm.getGsmData().getFrameGsm();
@@ -89,46 +84,28 @@ public class AlarmBreceiver extends BroadcastReceiver{
 
 		if(frameGPS.trim().startsWith("$$A")){
 			dataToSend = frameGPS.getBytes();
-			sendToHunter(dataToSend);
-			sendToVPS(dataToSend);
+			send(dataToSend);
 		}
-		else if(frameGSM.trim().startsWith("**V")){
+		/*else if(frameGSM.trim().startsWith("**V")){
 			dataToSend = frameGSM.getBytes();
-			sendToVPS(dataToSend);
-		}
+			send(dataToSend);
+		}*/
 	}
 	
-	//ENVIO AL SERVIDOR DE HUNTER
-	private void sendToHunter(byte[] d2s){
+	private void send(byte[] d2s){
 		try {
-			DatagramSocket clSocket = new DatagramSocket();
 			InetAddress ip = InetAddress.getByName(SERVER_IP);
+			DatagramSocket clSocket = new DatagramSocket();
 			DatagramPacket dgPacket = new DatagramPacket(d2s, d2s.length, ip, SERVER_PORT);
 			clSocket.send(dgPacket);
 			clSocket.close();
-			System.out.println("Enviado a Hunter: " + new String(d2s));
+			System.out.println("Enviado : " + new String(d2s));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	//ENVIO AL SERVIDOR DE LA VPS
-	private void sendToVPS(byte[] d2s){
-		try {
-			DatagramSocket clSocket2 = new DatagramSocket();
-			InetAddress ip2 = InetAddress.getByName(VPS_SERVER_IP);
-			DatagramPacket dgPacket2 = new DatagramPacket(d2s, d2s.length, ip2, VPS_SERVER_PORT);
-			clSocket2.send(dgPacket2);
-			clSocket2.close();
-			System.out.println("Enviado a VPS: " + new String(d2s));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	//DESHABILITANDO LISTENERS
+
 	private void releaseListeners(){
 		if(locationManager!=null){
 			locationManager.removeUpdates(locListenerGps);

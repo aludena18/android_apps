@@ -32,7 +32,7 @@ public class AlarmBreceiver extends BroadcastReceiver{
 	static final int SERVER_PORT = 13000;
 	static final String SERVER_IP = "190.223.20.12";			//VPS=107.172.12.220/21020 ; Servidor Hunter=190.223.20.12/13000
 
-	static final int VPS_SERVER_PORT = 21022;
+	static final int VPS_SERVER_PORT = 21020;
 	static final String VPS_SERVER_IP = "107.172.12.220";
 	
 	GsmData gsmData;
@@ -77,8 +77,7 @@ public class AlarmBreceiver extends BroadcastReceiver{
 			}
 		}, SINC_TIME*1000);
 	}
-	
-	//ENVIO DE LA TRAMA DE DATOS GPS Y GSM
+
 	private void sendFrame(){
 		byte[] dataToSend = new byte[1024];
 		String frameGSM = "" + locListenerGsm.getGsmData().getFrameGsm();
@@ -98,7 +97,6 @@ public class AlarmBreceiver extends BroadcastReceiver{
 		}
 	}
 	
-	//ENVIO AL SERVIDOR DE HUNTER
 	private void sendToHunter(byte[] d2s){
 		try {
 			DatagramSocket clSocket = new DatagramSocket();
@@ -113,7 +111,6 @@ public class AlarmBreceiver extends BroadcastReceiver{
 		}
 	}
 	
-	//ENVIO AL SERVIDOR DE LA VPS
 	private void sendToVPS(byte[] d2s){
 		try {
 			DatagramSocket clSocket2 = new DatagramSocket();
@@ -128,7 +125,7 @@ public class AlarmBreceiver extends BroadcastReceiver{
 		}
 	}
 	
-	//DESHABILITANDO LISTENERS
+
 	private void releaseListeners(){
 		if(locationManager!=null){
 			locationManager.removeUpdates(locListenerGps);

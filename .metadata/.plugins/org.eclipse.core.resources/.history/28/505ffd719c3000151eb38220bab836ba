@@ -32,7 +32,7 @@ public class AlarmBreceiver extends BroadcastReceiver{
 	static final int SERVER_PORT = 13000;
 	static final String SERVER_IP = "190.223.20.12";			//VPS=107.172.12.220/21020 ; Servidor Hunter=190.223.20.12/13000
 
-	static final int VPS_SERVER_PORT = 21022;
+	static final int VPS_SERVER_PORT = 21020;
 	static final String VPS_SERVER_IP = "107.172.12.220";
 	
 	GsmData gsmData;

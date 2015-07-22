@@ -46,7 +46,7 @@ public class LocationListenerGsm {
 	public void buildFrame(){
 		String frame = "**V," + gsmData.getImei() + "," +		//imei
 				gsmData.getOpName()	+ "," +						//command
-				"0001"	+ "," +									//identifier udp
+				//""	+ "," +									//identifier udp
 				gsmData.getEvent() + "," +				//event code
 				"" + "," +								//latitud
 				" " + "," +								//longitud
