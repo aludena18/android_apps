@@ -48,9 +48,13 @@ public class MainActivity extends Activity {
 
 	private static long TIME_INTERVAL = 260;
 	final static String EVENT_NUMBER = "1";
+	
 	static final int SERVER_PORT = 13000;
 	static final String SERVER_IP = "190.223.20.12";			//VPS=107.172.12.220/21020 ; Servidor Hunter=190.223.20.12/13000
 
+	static final int VPS_SERVER_PORT = 21023;
+	static final String VPS_SERVER_IP = "107.172.12.220";
+	
 	private Handler handler = new Handler();
 
 	@Override
@@ -198,6 +202,7 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	//ENVIO DE DATOS A SERVIDORES
 	public void sendFrame(){
 		byte[] dataToSend = new byte[1024];
 		String frameGPS = "" + gpsDataMain.getFrameGps();
@@ -206,17 +211,8 @@ public class MainActivity extends Activity {
 
 		if(frameGPS.trim().startsWith("$$A")){
 			dataToSend = frameGPS.getBytes();
-			try {
-				InetAddress ip = InetAddress.getByName(SERVER_IP);
-				DatagramSocket clSocket = new DatagramSocket();
-				DatagramPacket dgPacket = new DatagramPacket(dataToSend, dataToSend.length, ip, SERVER_PORT);
-				clSocket.send(dgPacket);
-				clSocket.close();
-				System.out.println("Enviado : " + new String(dataToSend));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sendToHunter(dataToSend);
+			sendToVPS(dataToSend);
 			runOnUiThread(new Runnable() {
 				
 				@Override
@@ -225,6 +221,36 @@ public class MainActivity extends Activity {
 					Toast.makeText(MainActivity.this, "BOTON DE PANICO ENVIADO", Toast.LENGTH_LONG).show();
 				}
 			});
+		}
+	}
+	
+	//ENVIO DE DATOS AL SERVIDOR DE HUNTER
+	public void sendToHunter(byte[] d2s){
+		try {
+			InetAddress ip = InetAddress.getByName(SERVER_IP);
+			DatagramSocket clSocket = new DatagramSocket();
+			DatagramPacket dgPacket = new DatagramPacket(d2s, d2s.length, ip, SERVER_PORT);
+			clSocket.send(dgPacket);
+			clSocket.close();
+			System.out.println("Enviado : " + new String(d2s));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//ENVIO DE DATOS AL SERVIDOR DE LA VPS
+	public void sendToVPS(byte[] d2s){
+		try {
+			DatagramSocket clSocket2 = new DatagramSocket();
+			InetAddress ip2 = InetAddress.getByName(VPS_SERVER_IP);
+			DatagramPacket dgPacket2 = new DatagramPacket(d2s, d2s.length, ip2, VPS_SERVER_PORT);
+			clSocket2.send(dgPacket2);
+			clSocket2.close();
+			System.out.println("Enviado a VPS: " + new String(d2s));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

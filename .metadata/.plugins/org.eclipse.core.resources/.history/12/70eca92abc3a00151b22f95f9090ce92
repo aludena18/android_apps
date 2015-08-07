@@ -2,10 +2,10 @@
 <resources>
 
     <string name="app_name">Alarm Service Location</string>
-    <string name="hello_world">Debe obtener una dirección antes de presionar el botón</string>
+    <string name="hello_world">Hunter Lojack 2015</string>
     <string name="action_settings">Settings</string>
     
     <string name="etqBtnPanic">Panic Button</string>
-    <string name="etqTxvDireccion">Obteniendo direccion, por favor espere</string>
+    <string name="etqTxvDireccion">Obteniendo direccion...</string>
 
 </resources>

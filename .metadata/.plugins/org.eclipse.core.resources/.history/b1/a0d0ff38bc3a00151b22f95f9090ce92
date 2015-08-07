@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Alarm Service Location</string>
-    <string name="hello_world">Debe obtener una dirección antes de presionar el botón</string>
+    <string name="hello_world">Debe obtener una dirección válida antes de presionar el botón</string>
     <string name="action_settings">Settings</string>
     
     <string name="etqBtnPanic">Panic Button</string>
