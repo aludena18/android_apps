@@ -1,0 +1,266 @@
+package com.alg.hunterpersonaltrack;
+
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+import android.R.color;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.telephony.TelephonyManager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.alg.builder.FrameGps;
+import com.alg.getset.GpsData;
+
+public class MainActivity extends ActionBarActivity {
+	private AlarmManager alarmMgr;
+	private PendingIntent pendingIntent;
+	
+	private NotificationManager nm;
+	private static final int ID_NOTIFICATION_CREAR = 1;
+	Button btPanico;
+	Switch swOnOff;
+	TextView tvMensaje;
+	
+	static final int SERVER_PORT = 13000;
+	static final String SERVER_IP = "190.223.20.12";		//VPS=107.172.12.220/21020 ; Servidor Hunter=190.223.20.12/13000
+	static final int TIME_INTERVAL = 320;
+	static final String EVENTO_ON = "30";
+	static final String EVENTO_OFF = "31";
+	static final String EVENTO_PANICO = "36";
+	
+	final String gpsLocationProvider = LocationManager.GPS_PROVIDER;
+	private Location lastKnownLocation_byGps;
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss",Locale.US);
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		/*RECIBIENDO DATOS DEL INTENT DE NOTIFICACION*/
+		Bundle b = getIntent().getExtras();
+		if(b!=null) System.out.println("Bundle : " + b.getString("key"));
+		else System.out.println("Bundle: null");
+		
+		/*CREANDO LA ALARMA*/
+		alarmMgr = (AlarmManager)getSystemService(ALARM_SERVICE);
+		Intent alarmIntent = new Intent(MainActivity.this, AlarmBreceiver.class);
+		pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
+
+		/*INSTANCIANDO LA VARIABLE DE NOTIFICACION*/
+		nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		
+		/*INSTANCIANDO LOS BOTONES*/
+		tvMensaje = (TextView)findViewById(R.id.txvMensaje);
+		btPanico = (Button)findViewById(R.id.btnPanico);
+		swOnOff = (Switch)findViewById(R.id.swtOnOff);
+		
+		btPanico.setEnabled(false);
+		btPanico.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				procesoBoton();
+			}
+		});
+		
+		swOnOff.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				procesoSwitch(isChecked);
+			}
+		});
+	}
+	
+	
+
+	@Override
+	public void onBackPressed() {
+		MainActivity mainActivity = this;
+		mainActivity.moveTaskToBack(true);
+	}
+
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public void procesoBoton(){
+		
+		/*INICIANDO LOCATIONMANAGER*/
+		LocationManager locationManager = (LocationManager)this.getSystemService(this.LOCATION_SERVICE);
+		/*OBTENIENDO LA ULTIMA POSICION*/
+		lastKnownLocation_byGps = locationManager.getLastKnownLocation(gpsLocationProvider);
+		if(lastKnownLocation_byGps==null) tvMensaje.setText("GPS last location not available");
+		else {
+			System.out.println("GPS PANIC BUTTON:\n" + lastKnownLocation_byGps.toString());
+			tvMensaje.setText("ULTIMA ACCION REALIZADA:\n" +
+								"Boton de Panico (" +
+								sdf.format(lastKnownLocation_byGps.getTime()) + ")");
+			procesoTrama(lastKnownLocation_byGps,EVENTO_PANICO);
+		}
+		
+		Toast.makeText(MainActivity.this, "BOTON DE PANICO ENVIADO", Toast.LENGTH_LONG).show();
+	}
+	
+	public void procesoSwitch(boolean isChecked){
+		
+		/*INICIANDO LOCATIONMANAGER*/
+		LocationManager locationManager = (LocationManager)this.getSystemService(this.LOCATION_SERVICE);
+		
+		if(isChecked){
+			cancel();
+			start();
+			notificacion();
+			
+			btPanico.setEnabled(true);
+			btPanico.setBackgroundColor(Color.rgb(0x61, 0x0B, 0x0B));
+			btPanico.setTextColor(Color.WHITE);
+			
+			/*OBTENIENDO LA ULTIMA POSICION*/
+			lastKnownLocation_byGps = locationManager.getLastKnownLocation(gpsLocationProvider);
+			if(lastKnownLocation_byGps==null) System.out.println("GPS last location not available");
+			else {
+				System.out.println("GPS Location ON:\n" + lastKnownLocation_byGps.toString());
+				tvMensaje.setText("ULTIMA ACCION REALIZADA:\n" +
+									"Aplicacion Iniciada (" +
+									sdf.format(lastKnownLocation_byGps.getTime()) + ")");
+				procesoTrama(lastKnownLocation_byGps,EVENTO_ON);
+			}
+			
+			Toast.makeText(MainActivity.this, "Encendido", Toast.LENGTH_LONG).show();
+		}
+		else{
+			cancel();
+			nm.cancel(ID_NOTIFICATION_CREAR);
+			
+			btPanico.setEnabled(false);
+			btPanico.setBackgroundColor(Color.rgb(0x58, 0x58, 0x58));
+			btPanico.setTextColor(Color.rgb(0x2E, 0x2E, 0x2E));
+			
+			/*OBTENIENDO LA ULTIMA POSICION GPS*/
+			lastKnownLocation_byGps = locationManager.getLastKnownLocation(gpsLocationProvider);
+			System.out.println("GPS Location OFF:\n" + lastKnownLocation_byGps.toString());
+			tvMensaje.setText("ULTIMA ACCION REALIZADA:\n" +
+								"Aplicacion Detenida (" +
+								sdf.format(lastKnownLocation_byGps.getTime()) + ")");
+			procesoTrama(lastKnownLocation_byGps,EVENTO_OFF);
+			
+			Toast.makeText(MainActivity.this, "Apagado", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	public void start(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10000, 1000*TIME_INTERVAL, pendingIntent);
+		System.out.println("Alarm Set");
+	}
+
+	public void cancel(){
+		alarmMgr.cancel(pendingIntent);
+		System.out.println("Alarm Canceled");
+	}
+
+	public void notificacion(){
+		NotificationCompat.Builder mBuilder =
+			    new NotificationCompat.Builder(this)
+			    .setSmallIcon(R.drawable.ic_launcher)
+			    .setContentTitle("Hunter PersonalTrack")
+			    .setContentText("Servicio Iniciado");
+		mBuilder.setOngoing(true);
+		/*
+		Intent intento = new Intent(this, MainActivity.class);
+		PendingIntent intencionPendiente = PendingIntent.getActivity(this, 0, intento, 0);
+		mBuilder.setContentIntent(intencionPendiente);
+		*/
+		nm.notify(ID_NOTIFICATION_CREAR, mBuilder.build());
+		
+	}
+
+	public void procesoTrama(Location location, String ev){
+		long dateCel = System.currentTimeMillis();
+		GpsData gpsData = new GpsData();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss",Locale.US);
+		TelephonyManager telManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+		
+		gpsData.setTimeGps(location.getTime());
+		gpsData.setTime(sdf.format(dateCel).trim());
+		gpsData.setImei(telManager.getDeviceId());
+		gpsData.setEvent(ev);
+		gpsData.setLatitude(Double.toString(location.getLatitude()));
+		gpsData.setLongitude(Double.toString(location.getLongitude()));
+		gpsData.setSpeed(Integer.toString((int)location.getSpeed()*18/5));
+		gpsData.setAltitude(Integer.toString((int)location.getAltitude()));
+		gpsData.setBearing(Integer.toString((int)location.getBearing()));
+		
+		FrameGps frameGps = new FrameGps(gpsData);
+		final String frame = frameGps.frameGps();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					InetAddress ip = InetAddress.getByName(SERVER_IP);
+					DatagramSocket clSocket = new DatagramSocket();
+					DatagramPacket dgPacket = new DatagramPacket(frame.getBytes(), frame.getBytes().length, ip, SERVER_PORT);
+					clSocket.send(dgPacket);
+					clSocket.close();
+					System.out.println("Enviado : " + new String(frame.getBytes()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+		
+		
+		
+	}
+}

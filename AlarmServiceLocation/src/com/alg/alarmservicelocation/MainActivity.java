@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
 		if(frameGPS.trim().startsWith("$$A")){
 			dataToSend = frameGPS.getBytes();
 			sendToHunter(dataToSend);
-			sendToVPS(dataToSend);
+			//sendToVPS(dataToSend);
 			runOnUiThread(new Runnable() {
 				
 				@Override
@@ -238,7 +238,7 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
 	//ENVIO DE DATOS AL SERVIDOR DE LA VPS
 	public void sendToVPS(byte[] d2s){
 		try {
@@ -252,5 +252,5 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
