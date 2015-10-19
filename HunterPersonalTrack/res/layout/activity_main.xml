@@ -12,6 +12,13 @@
         android:textColor="#FFFFFF"
         android:text="@string/hello_world" />
     
+    <TextView 
+        android:id="@+id/txvImei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:text="@string/etqTxvImei"/>
+    
     <TextView
         android:id="@+id/txvMensaje"
         android:layout_width="wrap_content"

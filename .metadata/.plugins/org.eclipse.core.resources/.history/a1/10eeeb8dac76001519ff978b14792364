@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name"
+        tran="false">Hunter Personal Track</string>
+    <string name="hello_world">HPT beta version 1.0</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="etqSwtOnOff">Desactivar/Activar</string>
+    <string name="etqBtnPanico">Boton de Panico</string>
+    <string name="etqTxvMensaje">Mensaje</string>
+    <string name="etqTxvImei">Device Information</string>
+
+</resources>

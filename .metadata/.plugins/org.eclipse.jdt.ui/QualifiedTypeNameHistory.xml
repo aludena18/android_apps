@@ -19,7 +19,6 @@
 <fullyQualifiedTypeName name="com.alg.getset.GsmData"/>
 <fullyQualifiedTypeName name="android.telephony.gsm.GsmCellLocation"/>
 <fullyQualifiedTypeName name="java.util.EventListenerProxy"/>
-<fullyQualifiedTypeName name="android.location.LocationManager"/>
 <fullyQualifiedTypeName name="com.alg.listener.LocationListenerGps"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
@@ -43,7 +42,6 @@
 <fullyQualifiedTypeName name="android.app.PendingIntent"/>
 <fullyQualifiedTypeName name="android.support.v4.app.NotificationCompat.Builder"/>
 <fullyQualifiedTypeName name="android.support.v4.app.NotificationCompat"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="android.location.Location"/>
 <fullyQualifiedTypeName name="com.alg.getset.GpsData"/>
@@ -53,11 +51,13 @@
 <fullyQualifiedTypeName name="java.lang.Runnable"/>
 <fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
-<fullyQualifiedTypeName name="com.alg.hunterpersonaltrack.MainActivity"/>
 <fullyQualifiedTypeName name="android.R.color"/>
 <fullyQualifiedTypeName name="android.content.res.ColorStateList"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.graphics.LightingColorFilter"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.TimeZone"/>
+<fullyQualifiedTypeName name="android.location.LocationManager"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.alg.hunterpersonaltrack.MainActivity"/>
 </qualifiedTypeNameHistroy>
